@@ -1,5 +1,38 @@
+import { useState,useEffect } from 'react';
+
+const axios =require('axios');
+
+
 
 function Dashboard() {
+
+    const[dashboard,setDashboard]=useState([]);
+    const [newUser,setNewUser]=useState();
+
+    const handleChange=()=>{
+
+    }
+    const handlePhoto=()=>{
+
+    }
+    const handleSubmit=()=>{
+
+    }
+
+    const fetchDashboarddetails=async()=>{
+
+        const dashboard= await axios.get('http://localhost:8000/api/get/users/62d50fc77504c61d0304d2b4');
+        // console.log(dashboard.data.Bio);
+        setDashboard(dashboard);
+    }
+
+    useEffect(() => {
+      
+    fetchDashboarddetails();
+
+    }, [])
+    
+
     return (
         <>
             <div className="directorist-user-dashboard">
@@ -27,7 +60,7 @@ function Dashboard() {
                                                 <span className="directorist_menuItem-icon">
                                                     <i className="fa fa-list" />
                                                 </span>
-                                                My Listing (1){" "}
+                                                My Listing (0){" "}
                                             </span>
                                         </a>
                                     </li>
@@ -324,7 +357,7 @@ function Dashboard() {
                                 className="directorist-tab__pane directorist-tab__pane--active"
                                 id="dashboard_profile"
                             >
-                                <form action="#" id="user_profile_form" method="post">
+                                <form action="#" id="user_profile_form" method="post" encType='multipart/form-data' onSubmit={handleSubmit}>
                                     <div className="directorist-row">
                                         <div className="directorist-col-lg-3">
                                             <div className="directorist-image-profile-wrap">
@@ -363,6 +396,7 @@ function Dashboard() {
                                                                         id="ezmu__file-input"
                                                                         className="ezmu__file-input"
                                                                         accept=".jpg, .jpeg, .png, .gif"
+                                                                        onChange={handlePhoto}
                                                                     />
                                                                     <label
                                                                         htmlFor="ezmu__file-input"
@@ -418,30 +452,36 @@ function Dashboard() {
                                                             My Profile
                                                         </h4>
                                                     </div>
+                                                  
+
+                                                      
                                                     <div className="directorist-card__body">
                                                         <div className="directorist-user-info-wrap">
                                                             <input type="hidden" name="ID" defaultValue={651} />
                                                             <div className="directorist-user-full-name">
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="full_name">Display Name</label>
+                                                                    <label htmlFor="DisplayName">Display Name</label>
                                                                     <input
                                                                         className="directorist-form-element"
                                                                         type="text"
-                                                                        id="full_name"
-                                                                        name="user[full_name]"
-                                                                        defaultValue="nency.patel"
-                                                                        placeholder="Enter your display name"
+                                                                        id="DisplayName"
+                                                                        name="DisplayName"
+                                                                        value={newUser.DisplayName}
+                                                                        onChange={handleChange}
+                                                                        
                                                                     />
                                                                 </div>
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="user_name">User Name</label>
+                                                                    <label htmlFor="Username">User Name</label>
                                                                     <input
                                                                         className="directorist-form-element"
-                                                                        id="user_name"
+                                                                        id="Username"
                                                                         type="text"
                                                                         disabled="disabled"
-                                                                        name="user[user_name]"
+                                                                        name="Username"
                                                                         defaultValue=""
+                                                                        value={newUser.Username}
+                                                                        onChange={handleChange}
                                                                     />{" "}
                                                                     <span className="directorist-input-extra-info">
                                                                         (username can not be changed)
@@ -450,105 +490,123 @@ function Dashboard() {
                                                             </div>
                                                             <div className="directorist-user-first-name">
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="first_name">First Name</label>
+                                                                    <label htmlFor="Firstname">First Name</label>
                                                                     <input
                                                                         className="directorist-form-element"
-                                                                        id="first_name"
+                                                                        id="Firstname"
                                                                         type="text"
-                                                                        name="user[first_name]"
-                                                                        defaultValue=""
+                                                                        name="Firstname"
+                                                                        placeholder=''
+                                                                        value={newUser.Firstname}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="last_name">Last Name</label>
+                                                                    <label htmlFor="Lastname">Last Name</label>
                                                                     <input
                                                                         className="directorist-form-element"
-                                                                        id="last_name"
+                                                                        id="Lastname"
                                                                         type="text"
-                                                                        name="user[last_name]"
+                                                                        name="Lastname"
                                                                         defaultValue=""
+                                                                        value={newUser.Lastname}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                             </div>
                                                             <div className="directorist-user-email">
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="req_email">Email (required)</label>
+                                                                    <label htmlFor="Email">Email (required)</label>
                                                                     <input
                                                                         className="directorist-form-element"
-                                                                        id="req_email"
+                                                                        id="Email"
                                                                         type="text"
-                                                                        name="user[user_email]"
+                                                                        name="Email"
                                                                         defaultValue=""
                                                                         required=""
+                                                                        value={newUser.Email}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="phone">Phone</label>
+                                                                    <label htmlFor="Phone">Phone</label>
                                                                     <input
                                                                         className="directorist-form-element"
                                                                         type="tel"
-                                                                        id="phone"
-                                                                        name="user[phone]"
+                                                                        id="Phone"
+                                                                        name="Phone"
                                                                         defaultValue=""
                                                                         placeholder="Enter your phone number"
+                                                                        value={newUser.Phone}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                             </div>
                                                             <div className="directorist-user-site-url">
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="website">Website</label>
+                                                                    <label htmlFor="Website">Website</label>
                                                                     <input
                                                                         className="directorist-form-element"
-                                                                        id="website"
+                                                                        id="Website"
                                                                         type="text"
-                                                                        name="user[website]"
+                                                                        name="Website"
                                                                         defaultValue=""
+                                                                        value={newUser.Website}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="address">Address</label>
+                                                                    <label htmlFor="Address">Address</label>
                                                                     <input
                                                                         className="directorist-form-element"
-                                                                        id="address"
+                                                                        id="Address"
                                                                         type="text"
-                                                                        name="user[address]"
+                                                                        name="Address"
                                                                         defaultValue=""
+                                                                        value={newUser.Address}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                             </div>
                                                             <div className="directorist-user-password">
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="new_pass">New Password</label>
+                                                                    <label htmlFor="NewPassword">New Password</label>
                                                                     <input
-                                                                        id="new_pass"
+                                                                        id="NewPassword"
                                                                         className="directorist-form-element"
                                                                         type="password"
-                                                                        name="user[new_pass]"
+                                                                        name="NewPassword"
                                                                         placeholder="Enter a new password"
+                                                                        value={newUser.NewPassword}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="confirm_pass">
+                                                                    <label htmlFor="cinformPassword">
                                                                         Confirm New Password
                                                                     </label>
                                                                     <input
-                                                                        id="confirm_pass"
+                                                                        id="cinformPassword"
                                                                         className="directorist-form-element"
                                                                         type="password"
-                                                                        name="user[confirm_pass]"
+                                                                        name="cinformPassword"
                                                                         placeholder="Confirm your new password"
+                                                                        value={newUser.cinformPassword}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                                 <div className="directorist-form-group">
-                                                                    <label htmlFor="bio">About Author</label>
+                                                                    <label htmlFor="AboutAuthor">About Author</label>
                                                                     <textarea
                                                                         className="wp-editor-area directorist-form-element"
                                                                         style={{ height: 200 }}
                                                                         autoComplete="off"
                                                                         cols={40}
-                                                                        name="user[bio]"
-                                                                        id="bio"
-                                                                        defaultValue={""}
+                                                                        name="AboutAuthor"
+                                                                        id="AboutAuthor"
+                                                                        defaultValue={dashboard?.data?.Bio}
+                                                                        value={newUser.AboutAuthor}
+                                                                        onChange={handleChange}
                                                                     />
                                                                 </div>
                                                             </div>
@@ -643,6 +701,7 @@ function Dashboard() {
                                                             <div id="directorist-prifile-notice" />
                                                         </div>
                                                     </div>
+                                                   
                                                 </div>
                                             </div>
                                         </div>

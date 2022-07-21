@@ -7,8 +7,8 @@ const DashboardSchema = new Schema({
       DisplayName: { type: String , trim:true },
       ProfileImage: { type: String },
       Username:{type:String,trim:true},
-      Firstname:{type:String,trime:true},
-      Lastname:{typr:String,trim:true},
+      Firstname:{type:String,trim:true},
+      Lastname:{type:String, trim:true},
       Email:{type:String,trim:true},
       Phone:{type:Number},
       Website:{type:String,trim:true},
@@ -17,9 +17,8 @@ const DashboardSchema = new Schema({
       cinformPassword:{type:String,trim:true},
       AboutAuthor:{type:String,trim:true},
       active : { type: Boolean , default:true},
-   
-
-}, {
+   },
+    {
   timestamps: true,
 });
 

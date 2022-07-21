@@ -126,5 +126,30 @@ router.post('/users/login', async (req, res) => {
 
 
 
+//get user
+
+router.get('/get/users/:id',async(req,res)=>{
+
+    try{
+        User.findById({_id:req.params.id},function(error,user){
+            if(error){
+                console.log(error);
+
+            }
+            else{
+                res.send(user);
+
+            }
+        })
+
+    }
+    catch(err){
+
+        console.log(err);
+
+    }
+})
+
+
 
 module.exports = router;
