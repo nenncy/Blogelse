@@ -128,7 +128,7 @@ function Navigation() {
                                     id="menu-item-2080"
                                     className="menu-item menu-item-type-post_type menu-item-object-page menu-item-2080"
                                   >
-                                    <a href="#">
+                                    <a href="/addlisting">
                                       Add Listing
                                     </a>
                                   </li>
@@ -154,7 +154,7 @@ function Navigation() {
                                     id="menu-item-2010"
                                     className="menu-item menu-item-type-post_type menu-item-object-page menu-item-2010"
                                   >
-                                    <a href="#">
+                                    <a href="/alllocation">
                                       All Locations
                                     </a>
                                   </li>

@@ -6,7 +6,7 @@ import Header from './Header';
 import Listing from './Listing';
 import Blog from './Blog';
 import OwlCarousel from './Carousal';
-import Location from './location';
+import Location from './home-location';
 
 
 const { Nav, Navbar, Container, Form, FormControl, Button, NavDropdown, Offcanvas } = require('react-bootstrap');
