@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
    Username: { type: String , trim:true },
-   Email: { type: String , trim:true , unique:true},
+   DisplayName:{type:String,trim:true},
+   ProfileImage: { type: String },
+   Phone:{type:Number},
+   Address:{type:String,trim:true},
+   Email: { type: String , trim:true },
    Password: { type: String}, 
    Firstname: { type: String , trim:true},
    Lastname: { type: String , trim:true},
@@ -12,6 +16,7 @@ const userSchema = new Schema({
    Bio: { type: String , trim:true},
    cinform:{type:Boolean, default:false},
    active: {type: Boolean, default: true }
+
 }, {
   timestamps: true,
 });

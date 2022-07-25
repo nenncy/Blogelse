@@ -4,7 +4,8 @@ const Bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const crypto = require('crypto');
-
+const multer=require('multer');
+const path=require('path');
 const User = require('../Modals/User.modal');
 const Token = require('../Modals/token.modal');
 
@@ -13,7 +14,7 @@ const Token = require('../Modals/token.modal');
 //sign up method
 router.post('/createuser', async (req, res) => {
     try {
-        User.findOne({ Email: req.body.Email }, function (error, user) {
+        User.findOne({ Username: req.body.Username }, function (error, user) {
             if (error) {
                 res.send(error)
             }
@@ -150,6 +151,63 @@ router.get('/get/users/:id',async(req,res)=>{
     }
 })
 
+//multer configuration
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../public/uploads/LocationImage')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+})
+const fileFilter = (req, file, cb) => {
+    const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if (allowedFileTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+let upload = multer({ storage, fileFilter });
+
+
+//Dashboard detailes
+
+router.post('/edit/dashboard/add/:userid',upload.single('ProfileImage'),async(req,res)=>{
+
+    User.findById({_id:req.params.userid},function(error,user){
+
+       
+        user.DisplayName= req.body.DisplayName;
+        user.ProfileImage = req.file.path
+            .replace('..\\public', '')
+            .replace('../public', '')
+            .replace('..public', '');
+
+      
+        user.Firstname = req.body.Firstname;
+        user.Lastname = req.body.Lastname;
+        user.Email = req.body.Email;
+        user.Phone = req.body.Phone;
+        user.Website = req.body.Website;
+        user.Address = req.body.Address;
+        user.Password=req.body.Password;
+        user.Bio=req.body.Bio;
+    
+        user.save(function(err){
+            if(err){
+                console.log(err);
+            }
+            else {
+                console.log("user profile changed")
+                res.send(user);
+            }
+        })
+
+
+    })
+})
 
 
 module.exports = router;

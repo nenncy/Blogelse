@@ -30,13 +30,13 @@ function Footer(){
                         id="menu-item-2092"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-2092"
                       >
-                        <a href="https://www.blogelse.com/about/">About Us</a>
+                        <a href="#">About Us</a>
                       </li>
                       <li
                         id="menu-item-3158"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3158"
                       >
-                        <a href="https://www.blogelse.com/listing-grid-view/">
+                        <a href="#">
                           Our Listing
                         </a>
                       </li>
@@ -44,7 +44,7 @@ function Footer(){
                         id="menu-item-3157"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3157"
                       >
-                        <a href="https://www.blogelse.com/privacy-policy/">
+                        <a href="#">
                           Privacy Policy
                         </a>
                       </li>
@@ -52,7 +52,7 @@ function Footer(){
                         id="menu-item-3156"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3156"
                       >
-                        <a href="https://www.blogelse.com/terms-and-conditions/">
+                        <a href="#">
                           Terms and Conditions
                         </a>
                       </li>
@@ -60,7 +60,7 @@ function Footer(){
                         id="menu-item-2093"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-2093"
                       >
-                        <a href="https://www.blogelse.com/contact/">
+                        <a href="#">
                           Contact Us
                         </a>
                       </li>
@@ -77,13 +77,13 @@ function Footer(){
                         id="menu-item-3159"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3159"
                       >
-                        <a href="https://www.blogelse.com/login/">Login</a>
+                        <a href="/login">Login</a>
                       </li>
                       <li
                         id="menu-item-2098"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-2098"
                       >
-                        <a href="https://www.blogelse.com/registration/">
+                        <a href="/register">
                           Sign Up
                         </a>
                       </li>
@@ -91,13 +91,13 @@ function Footer(){
                         id="menu-item-3702"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3702"
                       >
-                        <a href="https://www.blogelse.com/blogs/">Blogs</a>
+                        <a href="#">Blogs</a>
                       </li>
                       <li
                         id="menu-item-3160"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3160"
                       >
-                        <a href="https://www.blogelse.com/pricing-plan/">
+                        <a href="#">
                           Pricing Plan
                         </a>
                       </li>
@@ -105,7 +105,7 @@ function Footer(){
                         id="menu-item-3161"
                         className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3161"
                       >
-                        <a href="https://www.blogelse.com/guest-posting/">
+                        <a href="#">
                           Guest Posting
                         </a>
                       </li>
@@ -163,19 +163,7 @@ function Footer(){
                     </li>
                   </ul>
                 </div>
-                <div className="widget widget_block widget_text">
-                  <p>
-                    <a href="https://www.doarticle.com/post/bloglovin2.html">
-                      .
-                    </a>
-                    <a href="https://www.doarticle.com/post/loc51admin.html">
-                      .
-                    </a>
-                    <a href="https://doarticle.com/post/loc52admin.html">.</a>
-                    <a href="https://doarticle.com/post/loc53admin.html">.</a>
-                    <a href="https://doarticle.com/post/loc54news.html">.</a>
-                  </p>
-                </div>{" "}
+                
               </div>
             </div>
           </div>
@@ -197,7 +185,7 @@ function Footer(){
             <div className="copyr-content">
               {" "}
               <p>
-                ©2021 BlogElse.{" "}
+                ©2022 BlogElse.{" "}
                 <a href="https://www.infilon.com/">
                   <strong>Powered By Infilon</strong>
                 </a>

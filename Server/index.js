@@ -40,7 +40,7 @@ app.use('/',require('./Controllers/Password'));
 app.use('/',require('./Controllers/Plans'));
 app.use('/',require('./Controllers/PLanfeature'))
 app.use('/',require('./Controllers/Location'));
-app.use('/',require('./Controllers/Dashboard'));
+
 
 
 //mongo connection 

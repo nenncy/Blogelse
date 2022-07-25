@@ -1,749 +1,151 @@
-import { useState,useEffect } from 'react';
+import React, { useState, useRef } from 'react';
+import { Form, Row, Col, Button, Container } from 'react-bootstrap';
+import '../../Styles/dashboard.css'
+import Dropzone from 'react-dropzone';
+import { PersonFill , List} from 'react-bootstrap-icons';
+import { useDropzone } from 'react-dropzone';
+import axios from 'axios';
+import Sidebar from "react-sidebar";
 
-const axios =require('axios');
+const Dashboard = (props) => {
 
 
+    const [sidebarOpen, SetSidebarOpen] = useState(false);
 
-function Dashboard() {
-
-    const[dashboard,setDashboard]=useState([]);
-    const [newUser,setNewUser]=useState();
-
-    const handleChange=()=>{
-
-    }
-    const handlePhoto=()=>{
-
-    }
-    const handleSubmit=()=>{
-
-    }
-
-    const fetchDashboarddetails=async()=>{
-
-        const dashboard= await axios.get('http://localhost:8000/api/get/users/62d50fc77504c61d0304d2b4');
-        // console.log(dashboard.data.Bio);
-        setDashboard(dashboard);
-    }
-
-    useEffect(() => {
+    const onSetSidebarOpen = () => {
       
-    fetchDashboarddetails();
+        SetSidebarOpen({ sidebarOpen: true });
+        
+    }
+    const onSetSidebarClose=()=>{
 
-    }, [])
-    
+        SetSidebarOpen(false);
+    }
+   
+
+    const [file, setFile] = useState(null); // state for storing actual image
+    const [previewSrc, setPreviewSrc] = useState(''); // state for storing previewImage
+
+    const [state, setState] = useState({
+        ProfileImage: '',
+        DisplayName: ''
+    });
+
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const [isPreviewAvailable, setIsPreviewAvailable] = useState(false); // state to show preview only for images
+    const dropRef = useRef(); // React ref for managing the hover state of droppable area
+
+    const handleInputChange = (event) => {
+        setState({
+            ...state,
+            [event.target.name]: event.target.value
+        });
+    };
+
+    const handleOnSubmit = async (event) => {
+        event.preventDefault();
+    };
+
+    const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+
+    const files = acceptedFiles.map(file => (
+        <li key={file.path}>
+            {file.path} - {file.size} bytes
+        </li>
+    ));
+
+    const onDrop = (files) => {
+        const [uploadedFile] = files;
+        setFile(uploadedFile);
+
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+            setPreviewSrc(fileReader.result);
+        };
+
+        fileReader.readAsDataURL(uploadedFile);
+        setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png)$/));
+    };
 
     return (
         <>
-            <div className="directorist-user-dashboard">
-                <div className="directorist-container-fluid">
-                    <div className="directorist-user-dashboard__toggle">
-                        <a href="#" className="directorist-user-dashboard__toggle__link">
-                            <i className="la la-bars" />
-                        </a>
-                    </div>
-                    <div className="directorist-user-dashboard__contents directorist-tab directorist-tab-content-grid-fix">
-                        <div className="directorist-user-dashboard__nav directorist-tab__nav directorist-dashboard-nav-collapsed">
-                            <span className="directorist-dashboard__nav--close">
-                                <i className="fa fa-times" />
-                            </span>
-                            <div className="directorist-tab__nav__wrapper">
-                                <ul className="directorist-tab__nav__items">
-                                    <li className="directorist-tab__nav__item">
-                                        <a
-                                            href="#"
-                                            className="directorist-booking-nav-link directorist-tab__nav__link"
-                                            target="dashboard_my_listings"
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            <span className="directorist_menuItem-text">
-                                                <span className="directorist_menuItem-icon">
-                                                    <i className="fa fa-list" />
-                                                </span>
-                                                My Listing (0){" "}
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li className="directorist-tab__nav__item">
-                                        <a
-                                            href="#"
-                                            className="directorist-booking-nav-link directorist-tab__nav__link directorist-tab__nav__active"
-                                            target="dashboard_profile"
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            <span className="directorist_menuItem-text">
-                                                <span className="directorist_menuItem-icon">
-                                                    <i className="fa fa-user" />
-                                                </span>
-                                                My Profile{" "}
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li className="directorist-tab__nav__item">
-                                        <a
-                                            href="#"
-                                            className="directorist-booking-nav-link directorist-tab__nav__link"
-                                            target="dashboard_fav_listings"
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            <span className="directorist_menuItem-text">
-                                                <span className="directorist_menuItem-icon">
-                                                    <i className="fa fa-heart" />
-                                                </span>
-                                                Favorite Listings{" "}
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li className="directorist-tab__nav__item">
-                                        <a
-                                            href="#"
-                                            className="directorist-booking-nav-link directorist-tab__nav__link"
-                                            target="dashboard_announcement"
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            <span className="directorist_menuItem-text">
-                                                <span className="directorist_menuItem-icon">
-                                                    <i className="fa fa-bullhorn" />
-                                                </span>
-                                                Announcements{" "}
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li className="directorist-tab__nav__item">
-                                        <a
-                                            href="#"
-                                            className="directorist-booking-nav-link directorist-tab__nav__link"
-                                            target="packages"
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            <span className="directorist_menuItem-text">
-                                                <span className="directorist_menuItem-icon">
-                                                    <i className="fa fa-money" />
-                                                </span>
-                                                Packages{" "}
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li className="directorist-tab__nav__item">
-                                        <a
-                                            href="#"
-                                            className="directorist-booking-nav-link directorist-tab__nav__link"
-                                            target="order_history"
-                                            style={{ cursor: "pointer" }}
-                                        >
-                                            <span className="directorist_menuItem-text">
-                                                <span className="directorist_menuItem-icon">
-                                                    <i className="fa fa-clock-o" />
-                                                </span>
-                                                Order History{" "}
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="directorist-tab__nav__action">
-                                <a
-                                    href="https://www.blogelse.com/add-listing/"
-                                    className="directorist-btn directorist-btn-dark directorist-btn--add-listing"
-                                >
-                                    Submit Listing
-                                </a>
-                                <a
-                                    href="https://www.blogelse.com/wp-login.php?action=logout&redirect_to=https%3A%2F%2Fwww.blogelse.com&_wpnonce=47215c6f70"
-                                    className="directorist-btn directorist-btn-secondary directorist-btn--logout"
-                                >
-                                    Log Out
-                                </a>
-                            </div>
-                        </div>
-                        <div className="directorist-user-dashboard__tab-content directorist-tab__content">
-                            <div className="directorist-tab__pane" id="dashboard_my_listings">
-                                <div
-                                    className="directorist-dashboard-mylistings"
-                                    id="directorist-dashboard-mylistings-js"
-                                    data-paged={1}
-                                    data-search=""
-                                >
-                                    <div id="directorist-dashboard-preloader">
-                                        <div />
-                                        <div />
-                                        <div />
-                                        <div />
-                                    </div>
-                                    <div className="directorist-user-dashboard-area">
-                                        <div className="directorist-user-dashboard-tab">
-                                            <div className="directorist-user-dashboard-tab__nav">
-                                                <ul className="directorist-dashboard-listing-nav-js">
-                                                    <li className="directorist-tab-nav--content-link">
-                                                        <a
-                                                            href="#"
-                                                            data-tab="all"
-                                                            className="directorist-tab__nav__active"
-                                                        >
-                                                            All Listings
-                                                        </a>
-                                                    </li>
-                                                    <li className="directorist-tab-nav--content-link">
-                                                        <a href="#" data-tab="publish">
-                                                            Published
-                                                        </a>
-                                                    </li>
-                                                    <li className="directorist-tab-nav--content-link">
-                                                        <a href="#" data-tab="pending">
-                                                            Pending
-                                                        </a>
-                                                    </li>
-                                                    <li className="directorist-tab-nav--content-link">
-                                                        <a href="#" data-tab="expired">
-                                                            Expired
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <div className="directorist-user-dashboard-search">
-                                                    <div className="directorist-user-dashboard-search__icon">
-                                                        <i className="la la-search" />
-                                                    </div>
-                                                    <form id="directorist-dashboard-listing-searchform">
-                                                        <input
-                                                            type="text"
-                                                            placeholder="Search listings"
-                                                            name="searchtext"
-                                                        />
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div className="directorist-user-dashboard-tabcontent">
-                                                <div className="directorist-listing-table directorist-table-responsive">
-                                                    <table className="directorist-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th className="directorist-table-listing">
-                                                                    Listings
-                                                                </th>
-                                                                <th className="directorist-table-review">Review</th>
-                                                                <th className="directorist-table-review">Category</th>
-                                                                <th className="directorist-table-ex-date">
-                                                                    Expiration Date
-                                                                </th>
-                                                                <th className="directorist-table-status">Status</th>
-                                                                <th className="directorist_table-plan">Plan</th>
-                                                                <th className="directorist-table-actions" />
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody className="directorist-dashboard-listings-tbody">
-                                                            <tr data-id={9016}>
-                                                                <td>
-                                                                    <div className="directorist-listing-table-listing-info">
-                                                                        <div className="directorist-listing-table-listing-info__img">
-                                                                            <a href="https://www.blogelse.com/?post_type=at_biz_dir&p=9016">
-                                                                                <img
-                                                                                    src="https://www.blogelse.com/wp-content/plugins/directorist/public/assets/images/grid.jpg"
-                                                                                    alt="Test"
-                                                                                />
-                                                                            </a>
-                                                                        </div>
-                                                                        <div className="directorist-listing-table-listing-info__content">
-                                                                            <h4 className="directorist-title">
-                                                                                <a href="https://www.blogelse.com/?post_type=at_biz_dir&p=9016">
-                                                                                    Test
-                                                                                </a>
-                                                                            </h4>
-                                                                            <span className="directorist-listing-price">
-                                                                                $100.00
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td className="directorist_dashboard_rating">
-                                                                    <ul className="rating">
-                                                                        <li>
-                                                                            <span className="la la-star-o" />
-                                                                        </li>
-                                                                        <li>
-                                                                            <span className="la la-star-o" />
-                                                                        </li>
-                                                                        <li>
-                                                                            <span className="la la-star-o" />
-                                                                        </li>
-                                                                        <li>
-                                                                            <span className="la la-star-o" />
-                                                                        </li>
-                                                                        <li>
-                                                                            <span className="la la-star-o" />
-                                                                        </li>
-                                                                        <li className="reviews">
-                                                                            <span className="atbd_count">
-                                                                                (<b>0/5</b> ){" "}
-                                                                            </span>
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
-                                                                <td className="directorist_dashboard_category">
-                                                                    <ul>
-                                                                        <li>
-                                                                            <span>
-                                                                                <i className="fa fas fa-user-circle" />
-                                                                                <a href="https://www.blogelse.com/single-category/accounting/">
-                                                                                    Accounting
-                                                                                </a>
-                                                                            </span>{" "}
-                                                                        </li>
-                                                                    </ul>
-                                                                </td>
-                                                                <td>
-                                                                    <span className="directorist-ex-plan">
-                                                                        September 4, 2022
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <span className="directorist_badge dashboard-badge directorist_status_pending">
-                                                                        Pending
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <span className="directorist_listing-plan">
-                                                                        Free Plan
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <div className="directorist-actions">
-                                                                        <a
-                                                                            href="https://www.blogelse.com/add-listing/edit/9016/"
-                                                                            className="directorist-link-btn"
-                                                                        >
-                                                                            <i className="la la-edit" />
-                                                                            Edit
-                                                                        </a>
-                                                                        <div className="directorist-dropdown">
-                                                                            <a href="#" className="directorist-btn-more">
-                                                                                <i className="fa fa-ellipsis-h" />
-                                                                                More
-                                                                            </a>
-                                                                            <div className="directorist-dropdown-menu directorist-dashboard-listing-actions">
-                                                                                <div className="directorist-dropdown-menu__list">
-                                                                                    <a
-                                                                                        className="directorist-dropdown-item atpp_change_plan"
-                                                                                        data-target="atpp-plan-change-modal"
-                                                                                        data-listing_id={9016}
-                                                                                        href="#"
-                                                                                    >
-                                                                                        <i className="la la-edit" />
-                                                                                        Pay Now
-                                                                                    </a>
-                                                                                    <a
-                                                                                        className="directorist-dropdown-item "
-                                                                                        data-task="delete"
-                                                                                        href="#"
-                                                                                    >
-                                                                                        <i className="fa fa-trash" />
-                                                                                        Delete Listing
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <div className="directorist-dashboard-pagination"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>{" "}
-                            </div>
-                            <div
-                                className="directorist-tab__pane directorist-tab__pane--active"
-                                id="dashboard_profile"
-                            >
-                                <form action="#" id="user_profile_form" method="post" encType='multipart/form-data' onSubmit={handleSubmit}>
-                                    <div className="directorist-row">
-                                        <div className="directorist-col-lg-3">
-                                            <div className="directorist-image-profile-wrap">
-                                                <div
-                                                    id="user_profile_pic"
-                                                    className="ez-media-uploader directorist-profile-uploader"
-                                                    data-type="jpg, jpeg, png, gif"
-                                                    data-min-file-items={0}
-                                                    data-max-file-items={1}
-                                                    data-max-total-file-size={0}
-                                                    data-allow-multiple={0}
-                                                    data-show-alerts="false"
-                                                    data-show-file-size="false"
-                                                    data-featured="false"
-                                                    data-allow-sorting="false"
-                                                    data-show-info="false"
-                                                    data-uploader-type="avater"
-                                                >
-                                                    <div className="ezmu__drop-zone-section">
-                                                        <h2>Drop Here</h2>
-                                                    </div>
-                                                    <div className="ezmu__loading-section">
-                                                        <span className="ezmu__loading-icon">
-                                                            <span className="ezmu__loading-icon-img-bg" />
-                                                        </span>
-                                                    </div>
-                                                    <div className="ezmu__media-picker-section">
-                                                        <div className="ezmu__media-picker-controls">
-                                                            <span className="ezmu__media-picker-icon-wrap-avater">
-                                                                <span className="ezmu__icon ezmu-icon-avater" />
-                                                            </span>
-                                                            <div className="ezmu__media-picker-buttons">
-                                                                <div className="ezmu__upload-button-wrap">
-                                                                    <input
-                                                                        type="file"
-                                                                        id="ezmu__file-input"
-                                                                        className="ezmu__file-input"
-                                                                        accept=".jpg, .jpeg, .png, .gif"
-                                                                        onChange={handlePhoto}
-                                                                    />
-                                                                    <label
-                                                                        htmlFor="ezmu__file-input"
-                                                                        className="ezmu__btn ezmu__input-label"
-                                                                    >
-                                                                        Select
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="ezmu__preview-section ezmu--show">
-                                                        <div className="ezmu__thumbnail-area">
-                                                            <div className="ezmu__thumbnail-list">
-                                                                <div
-                                                                    className="ezmu__thumbnail-list-item ezmu__thumbnail_avater"
-                                                                    data-id={0}
-                                                                >
-                                                                    <div className="ezmu__thumbnail-list-item_front">
-                                                                        <div className="ezmu__thumbnail-front-item ezmu__front-item__close">
-                                                                            <span className="ezmu__front-item__close-icon">
-                                                                                <span className="ezmu__front-item__close-btn" />
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="ezmu__thumbnail-list-item_back">
-                                                                      <img
-                                                                      >
-                                                                      </img>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="ezmu__media-picker-buttons">
-                                                            <div className="ezmu__upload-button-wrap">
-                                                                <label
-                                                                    className="ezmu__btn ezmu__input-label ezmu__update-file-btn"
-                                                                    htmlFor="ezmu__file-input"
-                                                                >
-                                                                    Change
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="directorist-col-lg-9">
-                                            <div className="directorist-user-profile-edit">
-                                                <div className="directorist-card directorist-user-profile-box">
-                                                    <div className="directorist-card__header">
-                                                        <h4 className="directorist-card__header--title">
-                                                            My Profile
-                                                        </h4>
-                                                    </div>
-                                                  
+            <div className='dashboard'>
+            <Container>
+                
+            <Sidebar
+                    sidebar={<><b>Sidebar content</b>
+                    <button onClick={onSetSidebarClose}>
+                    close sidebar
+                </button></>}
+                    open={sidebarOpen}
+               
+                    onSetOpen={onSetSidebarOpen}
+                
+                    styles={{ sidebar: { background: "white" } }}
+                >
+                   
 
-                                                      
-                                                    <div className="directorist-card__body">
-                                                        <div className="directorist-user-info-wrap">
-                                                            <input type="hidden" name="ID" defaultValue={651} />
-                                                            <div className="directorist-user-full-name">
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="DisplayName">Display Name</label>
-                                                                    <input
-                                                                        className="directorist-form-element"
-                                                                        type="text"
-                                                                        id="DisplayName"
-                                                                        name="DisplayName"
-                                                                        value={newUser.DisplayName}
-                                                                        onChange={handleChange}
-                                                                        
-                                                                    />
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="Username">User Name</label>
-                                                                    <input
-                                                                        className="directorist-form-element"
-                                                                        id="Username"
-                                                                        type="text"
-                                                                        disabled="disabled"
-                                                                        name="Username"
-                                                                        defaultValue=""
-                                                                        value={newUser.Username}
-                                                                        onChange={handleChange}
-                                                                    />{" "}
-                                                                    <span className="directorist-input-extra-info">
-                                                                        (username can not be changed)
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="directorist-user-first-name">
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="Firstname">First Name</label>
-                                                                    <input
-                                                                        className="directorist-form-element"
-                                                                        id="Firstname"
-                                                                        type="text"
-                                                                        name="Firstname"
-                                                                        placeholder=''
-                                                                        value={newUser.Firstname}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="Lastname">Last Name</label>
-                                                                    <input
-                                                                        className="directorist-form-element"
-                                                                        id="Lastname"
-                                                                        type="text"
-                                                                        name="Lastname"
-                                                                        defaultValue=""
-                                                                        value={newUser.Lastname}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="directorist-user-email">
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="Email">Email (required)</label>
-                                                                    <input
-                                                                        className="directorist-form-element"
-                                                                        id="Email"
-                                                                        type="text"
-                                                                        name="Email"
-                                                                        defaultValue=""
-                                                                        required=""
-                                                                        value={newUser.Email}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="Phone">Phone</label>
-                                                                    <input
-                                                                        className="directorist-form-element"
-                                                                        type="tel"
-                                                                        id="Phone"
-                                                                        name="Phone"
-                                                                        defaultValue=""
-                                                                        placeholder="Enter your phone number"
-                                                                        value={newUser.Phone}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="directorist-user-site-url">
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="Website">Website</label>
-                                                                    <input
-                                                                        className="directorist-form-element"
-                                                                        id="Website"
-                                                                        type="text"
-                                                                        name="Website"
-                                                                        defaultValue=""
-                                                                        value={newUser.Website}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="Address">Address</label>
-                                                                    <input
-                                                                        className="directorist-form-element"
-                                                                        id="Address"
-                                                                        type="text"
-                                                                        name="Address"
-                                                                        defaultValue=""
-                                                                        value={newUser.Address}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="directorist-user-password">
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="NewPassword">New Password</label>
-                                                                    <input
-                                                                        id="NewPassword"
-                                                                        className="directorist-form-element"
-                                                                        type="password"
-                                                                        name="NewPassword"
-                                                                        placeholder="Enter a new password"
-                                                                        value={newUser.NewPassword}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="cinformPassword">
-                                                                        Confirm New Password
-                                                                    </label>
-                                                                    <input
-                                                                        id="cinformPassword"
-                                                                        className="directorist-form-element"
-                                                                        type="password"
-                                                                        name="cinformPassword"
-                                                                        placeholder="Confirm your new password"
-                                                                        value={newUser.cinformPassword}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="AboutAuthor">About Author</label>
-                                                                    <textarea
-                                                                        className="wp-editor-area directorist-form-element"
-                                                                        style={{ height: 200 }}
-                                                                        autoComplete="off"
-                                                                        cols={40}
-                                                                        name="AboutAuthor"
-                                                                        id="AboutAuthor"
-                                                                        defaultValue={dashboard?.data?.Bio}
-                                                                        value={newUser.AboutAuthor}
-                                                                        onChange={handleChange}
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <div className="directorist-user-socials">
-                                                                <h4 className="directorist-user-social-label">
-                                                                    Social Profiles
-                                                                </h4>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="facebook">
-                                                                        <span className="directorist-social-icon">
-                                                                            <i className="fa fa-facebook" />
-                                                                        </span>{" "}
-                                                                        Facebook
-                                                                    </label>
-                                                                    <input
-                                                                        id="facebook"
-                                                                        className="directorist-form-element"
-                                                                        type="url"
-                                                                        name="user[facebook]"
-                                                                        defaultValue=""
-                                                                        placeholder="Enter your facebook url"
-                                                                    />
-                                                                    <span className="directorist-input-extra-info">
-                                                                        Leave it empty to hide
-                                                                    </span>
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="twitter">
-                                                                        <span className="directorist-social-icon">
-                                                                            <i className="fa fa-twitter" />
-                                                                        </span>
-                                                                        Twitter
-                                                                    </label>
-                                                                    <input
-                                                                        id="twitter"
-                                                                        className="directorist-form-element"
-                                                                        type="url"
-                                                                        name="user[twitter]"
-                                                                        defaultValue=""
-                                                                        placeholder="Enter your twitter url"
-                                                                    />
-                                                                    <span className="directorist-input-extra-info">
-                                                                        Leave it empty to hide
-                                                                    </span>
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="linkedIn">
-                                                                        <span className="directorist-social-icon">
-                                                                            <i className="fa fa-linkedin" />
-                                                                        </span>
-                                                                        LinkedIn
-                                                                    </label>
-                                                                    <input
-                                                                        id="linkedIn"
-                                                                        className="directorist-form-element"
-                                                                        type="url"
-                                                                        name="user[linkedIn]"
-                                                                        defaultValue=""
-                                                                        placeholder="Enter linkedIn url"
-                                                                    />
-                                                                    <span className="directorist-input-extra-info">
-                                                                        Leave it empty to hide
-                                                                    </span>
-                                                                </div>
-                                                                <div className="directorist-form-group">
-                                                                    <label htmlFor="youtube">
-                                                                        <span className="directorist-social-icon">
-                                                                            <i className="fa fa-youtube" />
-                                                                        </span>
-                                                                        Youtube
-                                                                    </label>
-                                                                    <input
-                                                                        id="youtube"
-                                                                        className="directorist-form-element"
-                                                                        type="url"
-                                                                        name="user[youtube]"
-                                                                        defaultValue=""
-                                                                        placeholder="Enter youtube url"
-                                                                    />
-                                                                    <span className="directorist-input-extra-info">
-                                                                        Leave it empty to hide
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <button
-                                                                type="submit"
-                                                                className="directorist-btn directorist-btn-lg directorist-btn-dark directorist-btn-profile-save"
-                                                                id="update_user_profile"
-                                                            >
-                                                                Save Changes
-                                                            </button>
-                                                            <div id="directorist-prifile-notice" />
-                                                        </div>
-                                                    </div>
-                                                   
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>{" "}
+                 </Sidebar>
+
+                <Button  onClick={onSetSidebarOpen}>
+                        Open sidebar
+                </Button>
+
+
+                <Form className="search-form" >
+                    {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+                    <Row>
+                        <Col>
+                            <Form.Group controlId="title">
+                                <Form.Control
+                                    type="text"
+                                    name="ProfileImage"
+                                    value={state.title || ''}
+                                    placeholder="Enter title"
+                                    onChange={handleInputChange}
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Group controlId="description">
+                                <Form.Control
+                                    type="text"
+                                    name="DisplayName"
+                                    value={state.description || ''}
+                                    placeholder="Enter description"
+                                    onChange={handleInputChange}
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Form>
+                
+                <div className="upload-section">
+                    <Dropzone onDrop={onDrop}>
+                        {({ getRootProps, getInputProps }) => (
+                            <div {...getRootProps({ className: 'dropzone' })} ref={dropRef} id='dropzone' >
+                                <input {...getInputProps()} />
+                                {previewSrc ? <img className="preview-image" src={previewSrc} alt="Preview" /> :
+                                    <PersonFill color="grey" size={100} />
+                                }
+                                <Button variant="light">Select</Button>{' '}
                             </div>
-                            <div className="directorist-tab__pane" id="dashboard_fav_listings">
-                                <div className="directorist-favourite-items-wrap">
-                                    <div className="directorist-favourirte-items">
-                                        <div className="directorist-notfound">Nothing found!</div>
-                                    </div>
-                                </div>{" "}
-                            </div>
-                            <div className="directorist-tab__pane" id="dashboard_announcement">
-                                <div className="directorist-announcement-wrapper">
-                                    <p className="directorist_not-found">No announcements found</p>
-                                </div>{" "}
-                            </div>
-                            <div className="directorist-tab__pane" id="packages">
-                                {" "}
-                                <div className="atbd_tab_inner" id="manage_fees">
-                                    <div className="atbd_manage_fees_wrapper">
-                                        <p className="no_package_found">No package found!</p>{" "}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="directorist-tab__pane" id="order_history">
-                                <div className="atbd_tab_inner" id="manage_invoices">
-                                    <div className="atbd_manage_fees_wrapper">
-                                        <p className="no_order_found">No order found!</p>{" "}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>{" "}
-                    </div>
+                        )}
+                    </Dropzone>
+
                 </div>
-                <div className="directorist-shade" />
+                
+                    {/* <List color="black" size={20} onClick={onSetSidebarOpen} /> */}
+            </Container>
             </div>
-
         </>
-
     );
-}
+};
 
 export default Dashboard;
