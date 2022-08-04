@@ -1,0 +1,147 @@
+/* .homepage-container{
+  padding: 100px 200px;
+  overflow: hidden;
+} */
+section.section-container {
+
+  background-color: #ebecf1;
+}
+
+h2.home-page-heading {
+  color: #202020;
+  font-family: "Roboto", Sans-serif;
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1;   
+   padding-top: 93px;
+   padding-bottom: 22px;
+}
+
+.form-container {
+  padding: 11px;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  /* border-radius: 10px; */
+  margin: 34px;
+
+}
+.input-style {
+  border: 0 none !important;
+  width: 363px;
+  height: 40px;
+}
+
+element.style {
+}
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+}
+.btn-header{
+    color: #fff !important;
+    font-weight: 700;
+    border: 0 none !important;
+    line-height: 3.33333rem !important;
+    position: relative;
+    z-index: 1;
+    border-radius: 6px !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: linear-gradient(to right, #f88858, #fa8b0c);
+    margin-left: 20px;
+}
+.input-label-style {
+  margin-right: 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #272b41;
+}
+.lable {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+@media screen and (max-width: 1025px) {
+  #interstedSectionLarge{
+      display: none;
+  }
+  #interstedSectionSmall{
+      display: block !important;
+  }
+  .input-style {
+    border: 0 none !important;
+    width: 363px;
+    height: 40px;
+  }
+ 
+}
+
+@media screen and (max-width: 1500px) {
+  .input-style {
+    border: 0 none !important;
+    width: 100%;
+    height: 40px;
+  }
+}
+
+li.category {
+  list-style: none;
+  background-color: white;
+  padding: 9px;
+    margin: 20px;
+    box-shadow: 0 1px 2px rgb(160 158 185 / 10%);
+    border-radius: 7px;
+}
+svg {
+  overflow: hidden;
+  vertical-align: middle;
+  float: left;
+  margin-left: 11px;
+    padding-top: 0px;
+}
+li.category a{
+  text-decoration: none;
+  justify-content: center;
+  color: black;    
+  font-weight: 500;
+}
+
+.list {
+  background: white;
+  text-decoration: none;
+  color: black;
+}
+
+.list a{
+  text-decoration: none;
+  justify-content: center;
+  color: black;    
+  font-weight: 500;
+}
+form.form {
+  background-color: white;
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+  padding: 10px;width: 100%;
+  
+}
+@media screen  and (max-width:600px){
+
+   form.form {
+   flex-direction: column;
+  
+} 
+}
+
+
+ul.directory-listgrid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: flex-end;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-right: 10px;
+    margin-left: 10px;
+}

@@ -2,148 +2,298 @@ import React, { useState, useRef } from 'react';
 import { Form, Row, Col, Button, Container } from 'react-bootstrap';
 import '../../Styles/dashboard.css'
 import Dropzone from 'react-dropzone';
-import { PersonFill , List} from 'react-bootstrap-icons';
+import { PersonFill, List } from 'react-bootstrap-icons';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 import Sidebar from "react-sidebar";
+import Navigation from '../Navbar/navigation';
+import Login from '../Login';
+
 
 const Dashboard = (props) => {
-
-
-    const [sidebarOpen, SetSidebarOpen] = useState(false);
-
-    const onSetSidebarOpen = () => {
-      
-        SetSidebarOpen({ sidebarOpen: true });
-        
-    }
-    const onSetSidebarClose=()=>{
-
-        SetSidebarOpen(false);
-    }
-   
 
     const [file, setFile] = useState(null); // state for storing actual image
     const [previewSrc, setPreviewSrc] = useState(''); // state for storing previewImage
 
-    const [state, setState] = useState({
-        ProfileImage: '',
-        DisplayName: ''
-    });
+
 
     const [errorMsg, setErrorMsg] = useState('');
 
     const [isPreviewAvailable, setIsPreviewAvailable] = useState(false); // state to show preview only for images
-    const dropRef = useRef(); // React ref for managing the hover state of droppable area
-
-    const handleInputChange = (event) => {
-        setState({
-            ...state,
-            [event.target.name]: event.target.value
-        });
-    };
-
-    const handleOnSubmit = async (event) => {
-        event.preventDefault();
-    };
-
-    const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
-
-    const files = acceptedFiles.map(file => (
-        <li key={file.path}>
-            {file.path} - {file.size} bytes
-        </li>
-    ));
+    const dropRef = useRef(); // React ref for managing the hover state of droppable are
 
     const onDrop = (files) => {
-        const [uploadedFile] = files;
-        setFile(uploadedFile);
+        const [ProfileImage] = files;
+        setFile(ProfileImage);
 
         const fileReader = new FileReader();
         fileReader.onload = () => {
             setPreviewSrc(fileReader.result);
         };
 
-        fileReader.readAsDataURL(uploadedFile);
-        setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png)$/));
+        fileReader.readAsDataURL(ProfileImage);
+        setIsPreviewAvailable(ProfileImage.name.match(/\.(jpeg|jpg|png)$/));
     };
+
+    //form submit 
+    const [user, setUser] = useState({
+      
+
+        ProfileImage: '',
+        DisplayName: '',
+        Firstname: '',
+        Lastname: '',
+        Email: '',
+        Phone: '',
+        Website: '',
+        Address: '',
+        Password: '',
+        Bio: ''
+
+    });
+    console.log(user.ProfileImage);
+    console.log(user.DisplayName);
+    const handleChange = (event) => {
+        setUser({
+            ...user,
+            [event.target.name]: event.target.value
+        });
+    };
+
+    const handlePhoto = (e) => {
+
+        console.log(user.ProfileImage);
+        setUser({ ...user, ProfileImage: e.target.files[0] });
+    }
+
+    const handleOnSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('ProfileImage', user.ProfileImage);
+        formData.append('DisplayName', user.DisplayName);
+        formData.append('Firstname', user.Firstname);
+        formData.append('Lastname', user.Lastname);
+        formData.append('Email', user.Email);
+        formData.append('Phone', user.Phone);
+        formData.append('Website', user.Website);
+        formData.append('Address', user.Address);
+        formData.append('Password', user.Password);
+        formData.append('Bio', user.Bio);
+
+        axios.post('http://localhost:8000/api/edit/dashboard/add/62d78e3caca821d03a277729', formData)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+
 
     return (
         <>
+            {!localStorage.getItem("token") ? <Login /> : null}
+            <Navigation />
             <div className='dashboard'>
-            <Container>
-                
-            <Sidebar
-                    sidebar={<><b>Sidebar content</b>
-                    <button onClick={onSetSidebarClose}>
-                    close sidebar
-                </button></>}
-                    open={sidebarOpen}
-               
-                    onSetOpen={onSetSidebarOpen}
-                
-                    styles={{ sidebar: { background: "white" } }}
-                >
-                   
+                <Container>
+                    <Form method='post' onSubmit={handleOnSubmit} encType='multipart/form-data'>
+                        <div className='row'>
 
-                 </Sidebar>
+                            <div className='col-lg-3'>
 
-                <Button  onClick={onSetSidebarOpen}>
-                        Open sidebar
-                </Button>
+                                <div className="upload-section">
+                                    <Dropzone onDrop={onDrop}>
+                                        {({ getRootProps, getInputProps }) => (
+                                            <div {...getRootProps({ className: 'dropzone' })} ref={dropRef} id='dropzone' >
+                                                <input {...getInputProps()} type="file"
+                                                    accept=".png, .jpg, .jpeg" name="ProfileImage"
+                                                    value={user.ProfileImage} onChange={handlePhoto} />
+                                                {previewSrc ? <img className="preview-image" src={previewSrc} alt="Preview" /> :
+                                                    <PersonFill color="grey" size={100} />
+                                                }
+                                                <Button variant="light">Select</Button>{' '}
+                                            </div>
+                                        )}
+                                    </Dropzone>
 
-
-                <Form className="search-form" >
-                    {errorMsg && <p className="errorMsg">{errorMsg}</p>}
-                    <Row>
-                        <Col>
-                            <Form.Group controlId="title">
-                                <Form.Control
-                                    type="text"
-                                    name="ProfileImage"
-                                    value={state.title || ''}
-                                    placeholder="Enter title"
-                                    onChange={handleInputChange}
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Form.Group controlId="description">
-                                <Form.Control
-                                    type="text"
-                                    name="DisplayName"
-                                    value={state.description || ''}
-                                    placeholder="Enter description"
-                                    onChange={handleInputChange}
-                                />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
-                </Form>
-                
-                <div className="upload-section">
-                    <Dropzone onDrop={onDrop}>
-                        {({ getRootProps, getInputProps }) => (
-                            <div {...getRootProps({ className: 'dropzone' })} ref={dropRef} id='dropzone' >
-                                <input {...getInputProps()} />
-                                {previewSrc ? <img className="preview-image" src={previewSrc} alt="Preview" /> :
-                                    <PersonFill color="grey" size={100} />
-                                }
-                                <Button variant="light">Select</Button>{' '}
+                                </div>
                             </div>
-                        )}
-                    </Dropzone>
+                            <div className='col-lg-9'>
+                                <div className='dashboard-container'>
+                                    <Container>
+                                        <h1>My Profile</h1>
+                                        <hr />
+                                        <input id='dropzone'
+                                            type="file"
+                                            accept=".png, .jpg, .jpeg"
+                                            name="ProfileImage"
+                                            onChange={handlePhoto}
+                                        />
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>DisplayName</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                className="directorist-form-element"
+                                                id="DisplayName"
+                                                name="DisplayName"
+                                                value={user.DisplayName}
+                                                onChange={handleChange}
 
-                </div>
-                
-                    {/* <List color="black" size={20} onClick={onSetSidebarOpen} /> */}
-            </Container>
+                                            />
+
+                                        </Form.Group>
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>Username</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                className="directorist-form-element"
+                                                id="Username"
+                                                name="Username"
+                                                value={user.Username}
+                                                onChange={handleChange}
+
+                                            />
+
+                                        </Form.Group>
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>Firstname</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="Firstname"
+                                                autoComplete="off"
+                                                name="Firstname"
+                                                className="directorist-form-element"
+                                                value={user.Firstname}
+                                                onChange={handleChange}
+
+                                            />
+                                        </Form.Group>
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>Lastname</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                className="directorist-form-element"
+                                                id="Lastname"
+                                                name="Lastname"
+                                                value={user.Lastname}
+                                                onChange={handleChange}
+
+                                            />
+
+                                        </Form.Group>
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>Phone</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="Phone"
+                                                autoComplete="off"
+                                                name="Phone"
+                                                className="directorist-form-element"
+                                                value={user.Phone}
+                                                onChange={handleChange}
+
+                                            />
+                                        </Form.Group>
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>Email</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="Email"
+                                                autoComplete="off"
+                                                name="Email"
+                                                className="directorist-form-element"
+                                                value={user.Email}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>Website</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="Website"
+                                                autoComplete="off"
+                                                name="Website"
+                                                className="directorist-form-element"
+                                                value={user.Website}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>Address</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="Address"
+                                                autoComplete="off"
+                                                name="Address"
+                                                className="directorist-form-element"
+                                                value={user.Address}
+                                                onChange={handleChange}
+
+                                            />
+                                        </Form.Group>
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>New Password</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="Password"
+                                                autoComplete="off"
+                                                name="Password"
+                                                className="directorist-form-element"
+                                                value={user.Password}
+                                                onChange={handleChange}
+                                            />
+                                        </Form.Group>
+                                        {/* <Form.Group controlId="Lastname">
+                                            <Form.Label className='lable-tag'>Confirm Password</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="Password"
+                                                autoComplete="off"
+                                                name="Password"
+                                                className="directorist-form-element"
+                                                value={user.DisplayName}
+                                                onChange={handleChange}
+
+                                            />
+                                        </Form.Group> */}
+
+
+                                        <Form.Group >
+                                            <Form.Label className='lable-tag'>Bio</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                id="Bio"
+                                                as="textarea" rows={3}
+                                                autoComplete="off"
+                                                name="Bio"
+                                                className="directorist-form-element"
+                                                value={user.Bio}
+                                                onChange={handleChange}
+
+                                            />
+                                        </Form.Group>
+
+                                        <Button className='submit-btn' variant="primary" type="submit" name="submit">
+                                            Save
+                                        </Button>
+
+
+
+                                    </Container>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </Form>
+                </Container>
             </div>
+
+
         </>
     );
 };

@@ -25,7 +25,7 @@ router.post('/create/plans', async(req,res)=>{
                 if(err){
                     res.status(300).send({msg:err});
                 }
-               return  res.status(200).send({msg:"PLan created successfully."});
+               return  res.send({msg:"PLan created successfully."});
             });
 
 

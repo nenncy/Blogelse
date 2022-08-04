@@ -16,16 +16,16 @@ router.post('/plans/add/feature/:planid',async(req,res)=>{
             }
             else{
                
-                  PlanFeature.findOne({Featurename:req.body.Featurename},function(err, feature){
+                  //PlanFeature.findOne({Featurename:req.body.Featurename},function(err, feature){
 
-                    if(err){
-                        return res.send(err);
-                    }
-                    else if(feature){
-                        return res.status(400).send({msg:"already exist"});
-                    }
+                    // if(err){
+                    //     return res.send(err);
+                    // }
+                    // else if(feature){
+                    //     return res.status(400).send({msg:"already exist"});
+                    // }
              
-                   feature=new PlanFeature({
+                  const feature=new PlanFeature({
                     _featureId:plan._id,
                     Featurename:req.body.Featurename
                    })
@@ -39,7 +39,7 @@ router.post('/plans/add/feature/:planid',async(req,res)=>{
                         return res.status(200).send({msg:"added feature!"});
                     }
                    })
-                })
+                
             }
         })
 

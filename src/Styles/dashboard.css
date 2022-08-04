@@ -66,6 +66,46 @@ form.search-form {
   text-align: left;
 }
 
-.dashboard{
+
+.new-post{
   padding: 152px;
+}
+
+
+
+.dashboard {
+  background: #F4F5F7;
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+.dashboard-container {
+  text-align: left;
+  color: grey;
+  background: white;
+  border: 1px solid #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 1px black;
+  padding-bottom: 21px;
+}
+.dashboard-container h1{
+  color: rgb(19, 17, 17);
+  font-size: 25px;
+  margin-top: 10px;
+}
+.upload-section {
+  padding: 20px;
+  background: white;
+}
+button.submit-btn.btn.btn-primary {
+  background: #444752;
+  border: none;
+  width: 100%;
+  /* margin: -1px; */
+  min-height: 50px;
+  text-align: center;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+.form-control{
+  margin-bottom: 10px;
 }

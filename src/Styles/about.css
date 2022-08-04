@@ -1,0 +1,170 @@
+.header-scroller-transparent {
+    background: linear-gradient(to right, #47c9ea, #f88858);
+    position: relative;
+}
+
+.wrapper-contact h1 {
+    color: white;
+    font-size: 2.66667rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+.bg-about {
+    height: 594px;
+}
+.img-fluid img{
+    width: 100%;
+}
+
+.ImageFeatureContainer {
+    margin-top: 50px;
+    margin-bottom: 65px;
+}
+.LeftResourceBox img {
+    max-width: 100%;
+}
+.RightResourceBox h1 {
+    text-align: left;
+    color: #272B41;
+    font-family: "Muli", Sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.2em;
+}
+.RightResourceBox p{
+    margin-bottom: 15px;
+    color: #696969;
+    text-align: left;
+    line-height: 1.8rem;
+}
+
+.steps li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 2.33333rem;
+}
+ 
+.LeftBox h2{
+    font-size: 25px;
+    color: #272B41;
+    font-family: "Muli", Sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2em;
+    margin-bottom: 25px;
+
+    
+}
+h2 span{
+    color: #FF367E;;
+}
+.list-count{
+    margin-right: 1.66667rem;
+}
+.list-content {
+    text-align: left;
+}
+
+.list-count span {
+    width: 2.93333rem;
+    height: 2.93333rem;
+    border: 1px solid #EBECEF;
+    -webkit-border-radius: 20rem;
+    border-radius: 21rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 1.33333rem;
+    font-weight: 700;
+    color: #f88858;
+}
+
+.list-content h4{
+    font-family: "Muli", sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #272b41;
+    font-size: 1.2rem;
+    margin: 0 0 0.8rem 0;
+}
+.list-content p{
+    margin-bottom: 15px;
+    color: #696969;
+    text-align: left;
+    line-height: 1.8rem;
+}
+@media (max-width: 767px){
+    .LeftBox h2{
+       
+        font-size: 22px;
+        
+    }
+    .RightResourceBox h1 {
+     
+        font-size: 22px;
+       
+    }
+    .wrapper-contact h1 {
+        font-size: 32px;
+        text-align: center;
+    }
+}
+
+.subscriberWrapper {
+    padding: 6.66667rem 0 6.66667rem;
+    position: relative;
+    text-align: center;
+    background: url(https://www.blogelse.com/wp-content/themes/direo/img/svg/sb-shape.svg);
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center;
+}
+.subscriberWrapper p{
+    margin-bottom: 15px;
+    color: #696969;
+    text-align: center;
+    line-height: 1.8rem;
+}
+.btn-sub-gradient-one {
+    color: #fff !important;
+    font-weight: 700;
+    border: 0 none !important;
+    line-height: 3.33333rem !important;
+    position: relative;
+    z-index: 1;
+    -webkit-border-radius: 6px !important;
+    border-radius: 6px !important;
+    background: linear-gradient(to right, #f88858, #47c9ea);
+}
+ .subscribe-form .form-group input {
+    width: 100%;
+    height: 3.33333rem;
+    border: 0 none;
+    padding: 0 1rem 0 3.66667rem;
+    outline: 0;
+ }
+ .subscribe-form {
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 24.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-box-shadow: 0 10px 10px rgb(144 58 249 / 10%);
+    box-shadow: 0 10px 10px rgb(144 58 249 / 10%);
+    -webkit-border-radius: 20rem;
+    border-radius: 20rem;
+    overflow: hidden;
+}

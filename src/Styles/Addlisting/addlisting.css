@@ -1,0 +1,81 @@
+
+/* .plan-card {
+
+   padding: 32px;
+   
+} */
+.container-plans {
+    background: white;
+  
+    box-shadow: 0 5px 1rem rgb(39 43 65 / 7%);
+    /* position: relative; */
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 2rem;
+    font-size: 12px;
+    color: grey;
+}
+
+h3.plan-heading-style {
+    font-size: 25px;
+    /* margin-top: 18px; */
+    font-weight: 400;
+    color: black;
+    font-weight: 400;
+}
+h3.days-plan-styling {
+    font-size: 23px;
+    color: #4c4848;
+}
+.box p{
+    color: grey;
+}
+
+ul.ul-styling {
+    list-style: none;
+}
+ul.ul-styling li {
+   text-align: left;
+}
+
+button.continue-btn {
+    
+    border:2px solid white;
+    background: #FF367E ;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 30px;
+    transition: 0.3s ease;
+    text-decoration: none;
+     width: 100%;
+     margin-top: 9px;
+    margin-bottom: 9px;
+    border-radius: 6px;
+   
+}
+.atbd_popular_badge {
+    line-height: 3rem;
+    text-align: center;
+    font-size: 1.06667rem;
+    color: #fff;
+    display: block;
+    top: -45px;
+    width: 100%;
+    height: 45px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background: linear-gradient(to right, #FF367E, #fa8b0c);;
+}
+.atbd_badge{
+    line-height: 3rem;
+    text-align: center;
+    font-size: 1.06667rem;
+    color: #fff;
+    display: block;
+    top: -45px;
+    width: 100%;
+    height: 45px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}

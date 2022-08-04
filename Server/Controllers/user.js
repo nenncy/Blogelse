@@ -4,8 +4,10 @@ const Bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const crypto = require('crypto');
+
 const multer=require('multer');
 const path=require('path');
+
 const User = require('../Modals/User.modal');
 const Token = require('../Modals/token.modal');
 
@@ -63,6 +65,41 @@ router.post('/createuser', async (req, res) => {
 })
 
 
+//token verify
+
+router.get('/auth/token/verify/:token' , async(req,res)=>{
+    try{
+           Token.findOne({token:req.params.token}, function(err,token){
+            if(err){
+                return res.send(err);
+            }
+            else{
+                // return res.send(token);
+                 User.findOne({_id:token._userId},function(err,user){
+                    if(err){
+                        return res.send({msg:"user doesn't exist", err});
+                    }
+                    else{
+                        user.cinform=true;
+                        user.save((error)=>{
+                            if(error){
+                                console.log("error");
+                            }
+                            else{
+                                return res.send({msg:"user verify" , user})
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+    catch(error){
+         return res.send(error);
+    }
+})
+
+
 
 //signin method
 router.post('/users/login', async (req, res) => {
@@ -111,10 +148,26 @@ router.post('/users/login', async (req, res) => {
                 return res.status(401).send({msg:'Wrong Password!'});
             }
        
-           
             // user successfully logged in
             else{
-                return res.status(200).send({code:'6',msg: 'User successfully logged in.'});
+
+                 Token.findOne({_userId:user.id}, function(err,token){
+                    if(err){
+                        return res.send(err);
+                    }
+                    else{
+                        return res.send({msg: 'User successfully logged in.',data:token});
+                        // User.findOne({_id:token._userId},function(err,user){
+                        //     if(err){
+                        //         return res.send({msg:"user doesn't exist", err});
+                        //     }
+                        //     else{
+                        //         return res.send({msg: 'User successfully logged in.',data:user, token:token});
+                        //     }
+                        // })
+                    }
+                 })
+
             }
         })
        
@@ -124,6 +177,7 @@ router.post('/users/login', async (req, res) => {
         console.log(err);
     }
 })
+
 
 
 
@@ -152,10 +206,9 @@ router.get('/get/users/:id',async(req,res)=>{
 })
 
 //multer configuration
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../public/uploads/LocationImage')
+        cb(null, '../public/uploads/UserProfile')
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
@@ -173,7 +226,6 @@ let upload = multer({ storage, fileFilter });
 
 
 //Dashboard detailes
-
 router.post('/edit/dashboard/add/:userid',upload.single('ProfileImage'),async(req,res)=>{
 
     User.findById({_id:req.params.userid},function(error,user){
@@ -191,6 +243,7 @@ router.post('/edit/dashboard/add/:userid',upload.single('ProfileImage'),async(re
         user.Email = req.body.Email;
         user.Phone = req.body.Phone;
         user.Website = req.body.Website;
+        user.Username=user.Username;
         user.Address = req.body.Address;
         user.Password=req.body.Password;
         user.Bio=req.body.Bio;

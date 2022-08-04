@@ -1,0 +1,29 @@
+
+.footer-end {
+    margin: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+h5.text-about {
+    font-size: large;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 22px;
+    margin-bottom: 22px;
+}
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
+    text-align: left;
+    text-decoration: none;
+    color: grey;
+}
+.list-unstyled li a{
+    padding-left: 0;
+    text-decoration: none;
+    color: grey;
+}
+.footer-copyright.text-right a{
+    color: #fa8b0c;
+    text-decoration: none;
+}

@@ -1,0 +1,128 @@
+.bg-holder img{
+  width: 100%;
+ 
+  height: auto;
+}
+.bg-holder{
+  height: 200px;
+}
+.header-scroll-transparent {
+  background-image: url(https://www.blogelse.com/wp-content/uploads/2019/10/breadcrumb1.jpg);
+  position: relative;
+}
+ .wrapper-contact-above-text {
+  position: absolute;
+  top: 0%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  background-color: #292122b3;
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.5s ease-out;
+  transition: 0.3s ease;
+  cursor: pointer;
+  
+  /* background: grey; */
+ }
+ h1.title-content {
+  text-align: center;
+  padding-top: 139px;
+  font-size: 22px;
+}
+
+@media screen and (max-width:725px) {
+
+  h1.title-content {
+  text-align: center;
+  padding-top: 120px;
+  font-size: 16px;
+}
+.breadcrumb {
+  
+  font-size: 10px;
+}
+}
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0;
+  margin-bottom: 1rem;
+  color: white;
+  list-style: none;
+  text-align: center;
+  align-content: space-around;
+  justify-content: center;
+}
+.breadcrumb li a {
+  color: darkgray;
+  text-decoration: none;
+}
+.breadcrumb-item.active {
+  color: darkgrey;
+}
+
+/*  login  */
+
+.login-container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background: #F5F7FC;
+}
+.loginform-container {
+  background: white;
+  padding: 51px;
+  text-align: left;
+  color: grey;
+}
+label.lable-tag.form-label {
+  /* text-align: left; */
+  padding-top: 10px;
+}
+/* label.form-check-label {
+  float: left;
+} */
+button.submit-btn-login.btn.btn-primary {
+  color: white;
+  background: orange;
+  border: none;
+  padding: 14px;
+  margin-top: 18px;
+    margin-bottom: 24px;
+
+  /* padding-bottom: 24px; */
+}
+button#submit {
+  margin-top: 16px;
+  border: none;
+  background: orange;
+}
+.recovery_pass a{
+  text-decoration: none;
+  text-align: left;
+  margin-top: 10px;
+  color: rgb(236, 122, 15);
+}
+.recovery_pass{
+  color: orange;
+}
+
+button.btn.fb-login {
+  border: 1px solid #3B5999;
+}
+button.btn.fb-google {
+  border: 1px solid #DD4B39;
+  margin-left: 10px;
+}
+.social_login {
+  margin-top: 10px;
+}
+
+.donthave-account {
+  margin-top: 17px;
+}
+.donthave-account a {
+  text-decoration: none;
+  color: orange;
+}
