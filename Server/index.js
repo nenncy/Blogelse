@@ -42,7 +42,7 @@ app.use('/',require('./Controllers/PLanfeature'))
 app.use('/',require('./Controllers/Location'));
 app.use('/',require('./Controllers/BLog'));
 app.use('/',require('./Controllers/category'));
-
+app.use('/',require('./Controllers/Listing'));
 
 //mongo connection 
 

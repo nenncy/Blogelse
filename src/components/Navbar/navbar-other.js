@@ -77,7 +77,10 @@ function NavbarOther() {
         <ToastContainer></ToastContainer>
       })
   }
+
+
   const [colorChange, setColorchange] = useState(false);
+  
   const changeNavbarColor = () => {
     if (window.scrollY >= 80) {
       setColorchange(true);
@@ -104,7 +107,6 @@ function NavbarOther() {
           <Navbar expand="lg" className={colorChange ? 'navbar colorChange' : 'navbar'}>
             <Container fluid>
               <Navbar.Brand ><img
-            
                  src={ colorChange  ? "https://www.blogelse.com/wp-content/uploads/2020/06/Blog-Else-2.png" : "https://www.blogelse.com/wp-content/uploads/2020/06/cropped-Blog-Else-W.png"}
                 width="100"
                 height="30"

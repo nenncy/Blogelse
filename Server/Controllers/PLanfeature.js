@@ -5,13 +5,10 @@ const PlanFeature=require('../Modals/Planfeature.modal');
 
 router.post('/plans/add/feature/:planid',async(req,res)=>{
     try{
-         console.log(req.params.planid)
-          Plan.findOne({_id:req.params.planid},function(err,plan){
-            if(err){
-              return  res.send(err);
-
-            }
-            else if(!plan){
+          console.log(req.params.planid)
+        const plan= await Plan.findOne({_id:req.params.planid});
+          
+           if(!plan){
                 return res.send({msg:"Plan doesn't exist.Something error happend !"});
             }
             else{
@@ -41,7 +38,7 @@ router.post('/plans/add/feature/:planid',async(req,res)=>{
                    })
                 
             }
-        })
+      
 
     }
     catch(err){

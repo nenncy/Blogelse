@@ -12,6 +12,7 @@ import Location from '../components/Pages/Location';
 import Dashboard from '../components/Pages/Dashboard';
 import Blog from '../components/Pages/Blog';
 import Category from '../components/Pages/Category';
+import Listing from '../components/Pages/listing';
 
 import { createContext } from 'react';
 import { initialState,reducer } from '../reducers/userReducer';
@@ -42,7 +43,7 @@ const DefaulRoutes = () => {
                         <Route path='/blog' exact element={<Blog />} />
                         <Route path='/allcategory' exact element={<Category/>} />
                         <Route path='/aboutus' exact element={<About/>} />
-
+                        <Route path='/addlisting/listing/:planid' exact element={<Listing/>}></Route>
                     </Routes>
             </BrowserRouter>
             </userContext.Provider>

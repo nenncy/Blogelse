@@ -14,7 +14,6 @@ function ProtectedRoute({ Component }) {
          await axios.get(HttpService.loginUrlVerifyToken +`${tokenid}`)
          
          .then((response)=>{
-            console.log(response)
             setItem(response.data.user.cinform);
          })  
          .catch((err)=>{

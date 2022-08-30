@@ -10,8 +10,16 @@ const blogSchema=new Schema(
             type: String,
          
         },
-        date: { type: String,  },
-        comments: [String]
+        date: {type: Date, default: Date.now},
+        comments:[{
+            text: {type: String},
+            postedBy:{type:mongoose.Schema.Types.ObjectId,ref:"User"}
+        }],
+        postedBy:{
+
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User"
+        }
     },
     { timestamps: true }
 )

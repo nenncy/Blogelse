@@ -32,47 +32,39 @@ router.post('/create/category',upload.single('ctimage'), async (req, res) => {
 
 
     try {
-        Category.findOne({ categoryName: req.body.ctname }, function (error, category) {
-            if (error) {
-                return res.send(error);
-            }
-            else if (category) {
+         const category=await Category.findOne({ categoryName: req.body.ctname })
+            
+            if (category) {
                 return res.send({ msg: "category already exist!" });
             }
 
-            category = new Category({
+           const newcategory = new Category({
                 categoryName: req.body.ctname,
                 icons: req.body.icon,
                 CategoryImage
             })
-            category.save(function (error, category) {
+            newcategory.save(function (error, category) {
                 if (error) {
                     return res.send(error);
                 }
                 else {
                     return res.send({ msg: "category created succesfully", category })
                 }
-            })
-
-        })
+            }) 
     }
     catch (err) {
-
+        return res.send(err);
     }
 })
 
 //get all category
 router.get('/get/category', async (req, res) => {
     try {
-        Category.find((error, data) => {
-            if (error) {
-                return res.send(error);
+        const category= await Category.find();
+            
+           if(category) {
+                return res.send(category);
             }
-            else {
-                return res.send(data);
-            }
-        })
-
     }
     catch (err) {
         return res.send(err)

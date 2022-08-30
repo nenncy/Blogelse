@@ -7,7 +7,8 @@ const HttpService = {
     SignupUrl:baseUrl+'api/createuser',
     GetCategoryUrl: baseUrl+'get/category',
     GetLocationUrl:baseUrl+'get/alllocations',
-    addListingUrl:baseUrl+'get/plans/features'
+    addListingUrl:baseUrl+'get/plans/features',
+    FetchUserDetailUrl:baseUrl+'api/get/user/'
 };
 
 export default HttpService;

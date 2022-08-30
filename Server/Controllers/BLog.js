@@ -28,4 +28,19 @@ router.post('/create/blog',async(req,res)=>{
 })
 
 
+router.get('/get/blogs', async(req,res)=>{
+  try{
+  const allblogs= await Blog.find();
+   if(allblogs){
+    return res.send(allblogs)
+   }
+   else{
+    return res.send({msg:"something went wrong!"});
+   }
+  }
+  catch(error){
+    return res.send(error);
+  }
+})
+
 module.exports=router;

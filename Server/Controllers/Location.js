@@ -39,21 +39,19 @@ router.post('/add/listing/location', upload.single('LocationImage'), async (req,
             .replace('../public', '')
             .replace('..public', '');
 
-        Location.findOne({ LocationName: req.body.LocationName }, function (error, location) {
-            if (error) {
-                return res.send(error);
-            }
-            else if (location) {
+      const location=await Location.findOne({ LocationName: req.body.LocationName })
+            
+            if (location) {
                 return res.send({ msg: "location already exist" });
             }
-            location = new Location({
+           const  newlocation = new Location({
                 LocationName,
                 LocationImage
             })
-            location.save()
+            newlocation.save()
                 .then(() => res.json('Location Added'))
                 .catch(err => res.status(400).json('Error: ' + err));
-        })
+       
 
 
     }
@@ -68,15 +66,12 @@ router.post('/add/listing/location', upload.single('LocationImage'), async (req,
 
 router.get('/get/alllocations', async (req, res) => {
     try {
-        Location.find((error, data) => {
-            if (error) {
-                res.send(error);
-            }
-            else {
-                return res.status(200).send({ data })
+      const location=await Location.find();
+            
+            if(location){
+                return res.status(200).send({data:location})
 
-            }
-        })
+            }   
 
     }
     catch (err) {

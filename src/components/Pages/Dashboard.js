@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Form, Row, Col, Button, Container } from 'react-bootstrap';
 import '../../Styles/dashboard.css'
 import Dropzone from 'react-dropzone';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import Sidebar from "react-sidebar";
 import Navigation from '../Navbar/navigation';
 import Login from '../Login';
+import HttpService from '../../utils/http.service';
 
 
 const Dashboard = (props) => {
@@ -36,9 +37,36 @@ const Dashboard = (props) => {
     };
 
     //form submit 
-    const [user, setUser] = useState({
-      
 
+
+    const [edit, setEdit] = useState([]);
+    const tokenid = localStorage.getItem('token');
+
+    const fetchUserdetails = async () => {
+
+
+        await axios.get(HttpService.FetchUserDetailUrl + `${tokenid}`)
+            .then((response) => {
+
+                setEdit(response.data);
+
+
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+
+    }
+
+    useEffect(() => {
+
+        if(tokenid){
+            fetchUserdetails()
+        }
+      
+    }, [tokenid])
+
+    const [user, setUser] = useState({
         ProfileImage: '',
         DisplayName: '',
         Firstname: '',
@@ -51,8 +79,7 @@ const Dashboard = (props) => {
         Bio: ''
 
     });
-    console.log(user.ProfileImage);
-    console.log(user.DisplayName);
+
     const handleChange = (event) => {
         setUser({
             ...user,
@@ -61,8 +88,6 @@ const Dashboard = (props) => {
     };
 
     const handlePhoto = (e) => {
-
-        console.log(user.ProfileImage);
         setUser({ ...user, ProfileImage: e.target.files[0] });
     }
 
@@ -80,7 +105,7 @@ const Dashboard = (props) => {
         formData.append('Password', user.Password);
         formData.append('Bio', user.Bio);
 
-        axios.post('http://localhost:8000/api/edit/dashboard/add/62d78e3caca821d03a277729', formData)
+        axios.post(`http://localhost:8000/api/edit/dashboard/add/${edit._id}`, formData)
             .then(res => {
                 console.log(res);
             })
@@ -106,9 +131,7 @@ const Dashboard = (props) => {
                                     <Dropzone onDrop={onDrop}>
                                         {({ getRootProps, getInputProps }) => (
                                             <div {...getRootProps({ className: 'dropzone' })} ref={dropRef} id='dropzone' >
-                                                <input {...getInputProps()} type="file"
-                                                    accept=".png, .jpg, .jpeg" name="ProfileImage"
-                                                    value={user.ProfileImage} onChange={handlePhoto} />
+                                                <input {...getInputProps()} />
                                                 {previewSrc ? <img className="preview-image" src={previewSrc} alt="Preview" /> :
                                                     <PersonFill color="grey" size={100} />
                                                 }
@@ -124,7 +147,7 @@ const Dashboard = (props) => {
                                     <Container>
                                         <h1>My Profile</h1>
                                         <hr />
-                                        <input id='dropzone'
+                                        <input
                                             type="file"
                                             accept=".png, .jpg, .jpeg"
                                             name="ProfileImage"
@@ -146,14 +169,17 @@ const Dashboard = (props) => {
                                         <Form.Group >
                                             <Form.Label className='lable-tag'>Username</Form.Label>
                                             <Form.Control
+
                                                 type="text"
                                                 className="directorist-form-element"
                                                 id="Username"
                                                 name="Username"
-                                                value={user.Username}
+
+                                                value={edit?.Username}
                                                 onChange={handleChange}
 
                                             />
+                                            username can not be changed
 
                                         </Form.Group>
                                         <Form.Group >
@@ -164,7 +190,8 @@ const Dashboard = (props) => {
                                                 autoComplete="off"
                                                 name="Firstname"
                                                 className="directorist-form-element"
-                                                value={user.Firstname}
+                                                // value={user.Firstname}
+                                                defaultValue={edit.Firstname}
                                                 onChange={handleChange}
 
                                             />
@@ -176,7 +203,7 @@ const Dashboard = (props) => {
                                                 className="directorist-form-element"
                                                 id="Lastname"
                                                 name="Lastname"
-                                                value={user.Lastname}
+                                                defaultValue={edit.Lastname}
                                                 onChange={handleChange}
 
                                             />
@@ -190,7 +217,7 @@ const Dashboard = (props) => {
                                                 autoComplete="off"
                                                 name="Phone"
                                                 className="directorist-form-element"
-                                                value={user.Phone}
+                                                defaultValue={edit.Phone}
                                                 onChange={handleChange}
 
                                             />
@@ -198,12 +225,14 @@ const Dashboard = (props) => {
                                         <Form.Group >
                                             <Form.Label className='lable-tag'>Email</Form.Label>
                                             <Form.Control
+                                              
                                                 type="text"
                                                 id="Email"
                                                 autoComplete="off"
                                                 name="Email"
                                                 className="directorist-form-element"
-                                                value={user.Email}
+                                               
+                                                defaultValue={edit.Email}
                                                 onChange={handleChange}
                                             />
                                         </Form.Group>
@@ -215,7 +244,7 @@ const Dashboard = (props) => {
                                                 autoComplete="off"
                                                 name="Website"
                                                 className="directorist-form-element"
-                                                value={user.Website}
+                                                defaultValue={edit.Website}
                                                 onChange={handleChange}
                                             />
                                         </Form.Group>
@@ -228,7 +257,7 @@ const Dashboard = (props) => {
                                                 autoComplete="off"
                                                 name="Address"
                                                 className="directorist-form-element"
-                                                value={user.Address}
+                                                defaultValue={edit.Address}
                                                 onChange={handleChange}
 
                                             />
@@ -241,7 +270,7 @@ const Dashboard = (props) => {
                                                 autoComplete="off"
                                                 name="Password"
                                                 className="directorist-form-element"
-                                                value={user.Password}
+                                                defaultValue={edit.Password}
                                                 onChange={handleChange}
                                             />
                                         </Form.Group>
@@ -269,7 +298,7 @@ const Dashboard = (props) => {
                                                 autoComplete="off"
                                                 name="Bio"
                                                 className="directorist-form-element"
-                                                value={user.Bio}
+                                                defaultValue={edit.Bio}
                                                 onChange={handleChange}
 
                                             />
