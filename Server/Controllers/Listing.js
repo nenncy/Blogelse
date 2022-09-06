@@ -20,6 +20,7 @@ router.post("/addlisting/plans/:planid", async (req, res) => {
         content: req.body.content,
         slogan: req.body.slogan,
         categoryid: req.body.categoryid,
+        price:req.body.price
       });
       newListing.save((error, data) => {
         if (error) {

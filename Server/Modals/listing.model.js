@@ -5,6 +5,7 @@ const Schema=mongoose.Schema;
 
 const ListingSchema=new Schema({
     title:{type:String},
+    price:{type:Number},
     planid:{type:mongoose.Schema.Types.ObjectId, required: true, ref: 'Plan'},
     content:{type:String},
     slogan:{type:String},
