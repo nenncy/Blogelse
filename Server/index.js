@@ -43,6 +43,7 @@ app.use('/',require('./Controllers/Location'));
 app.use('/',require('./Controllers/BLog'));
 app.use('/',require('./Controllers/category'));
 app.use('/',require('./Controllers/Listing'));
+app.use('/',require('./Controllers/Tags'));
 
 //mongo connection 
 

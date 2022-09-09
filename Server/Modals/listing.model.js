@@ -9,7 +9,9 @@ const ListingSchema=new Schema({
     planid:{type:mongoose.Schema.Types.ObjectId, required: true, ref: 'Plan'},
     content:{type:String},
     slogan:{type:String},
+    features:[String],
     categoryid:{type:mongoose.Schema.Types.ObjectId,  ref: 'Category' },
+    locationid:{type:mongoose.Schema.Types.ObjectId,  ref: 'Location' },
     active:{type:Boolean , default:true}
 }, 
   {timestamps:true}

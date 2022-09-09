@@ -157,6 +157,7 @@ import { Form, Row } from "react-bootstrap";
 import Headroom from "react-headroom";
 import axios from "axios";
 import { nanoid } from "nanoid";
+import { useParams } from "react-router-dom";
 
 function Addnew({ deleteHandeler, id }) {
   return (
@@ -236,14 +237,66 @@ function Addnew1({ deleteHandeler1, id }) {
 }
 
 const Listing1 = () => {
+  const [feature, setFeatures] = useState([]);
+
+  const featurearray = [
+    {
+      id:1,
+      name:"Accepts Credit Cards"
+    },
+    {
+      id:2,
+      name:"Parking"
+    },
+    {
+      id:3,
+      name:"Coupons"
+    },  {
+      id:4,
+      name:"Parking Street"
+    }
+  ];
+
+  // const [check, setCheck] = useState({
+  //   isCredit: false,
+  //   isParking: false,
+  //   isCoupons: false,
+  //   isParkingStreet: false,
+  //   isInternet: false,
+  // });
+
+  const [check, setCheck] = useState([]);
+
+  const onChangeCredit = (e, ele) => {
+
+    const value = e.target.value;
+    setCheck((prev) =>
+      check.includes(value)
+        ? prev.filter((cur) => cur !== value)
+        : [...prev, e.target.value]
+    );
+    
+  };
+
+  useEffect(() => {
+    //Print data each time the checkbox is "checked" or "unchecked"
+    console.log(check);
+  }, [check]);
+
+  let { planid } = useParams();
+
   // start form submit
   const [category, setCategory] = useState([]);
   const [categoryid, setCategoryid] = useState();
+  const [locationid, setLocationid] = useState();
+  const [location, setLocation] = useState();
+  const [tags, setTags] = useState();
   const [listingdata, setListingdata] = useState({
     title: "",
     content: "",
     slogan: "",
-    price:""
+    price: "",
+    features:[]
   });
 
   const handleChange = (event) => {
@@ -255,7 +308,14 @@ const Listing1 = () => {
     setCategoryid(categoryid);
   };
 
-  console.log(categoryid);
+  const handleLocation = (event) => {
+    event.preventDefault();
+    const locationid = event.target.value;
+    setLocationid(locationid);
+  };
+
+  console.log(locationid);
+
   const handlesubmit = (e) => {
     e.preventDefault();
 
@@ -264,24 +324,42 @@ const Listing1 = () => {
       content: listingdata.content,
       slogan: listingdata.slogan,
       categoryid: categoryid,
-      price:listingdata.price
+      locationid: locationid,
+      price: listingdata.price,
+      features:check
     };
-    console.log(data);
+
     const res = axios.post(
-      "http://localhost:8000/addlisting/plans/62d7c39de6d860a8638b185a",
+      `http://localhost:8000/addlisting/plans/${planid}`,
       data
     );
     console.log(res);
   };
 
+  //get dropdown value
+  const getcategory = async () => {
+    const req = await fetch("http://localhost:8000/get/category");
+    const getres = await req.json();
+    console.log(getres);
+    setCategory(await getres);
+  };
+  const getLocation = async () => {
+    const req = await fetch("http://localhost:8000/get/alllocations");
+    const res = await req.json();
+    console.log(res);
+    setLocation(await res);
+  };
+  const getTags = async () => {
+    const req = await fetch("http://localhost:8000/get/allltags");
+    const res = await req.json();
+    console.log(res);
+    setTags(await res);
+  };
+
   useEffect(() => {
-    const getcountry = async () => {
-      const req = await fetch("http://localhost:8000/get/category");
-      const getres = await req.json();
-      console.log(getres);
-      setCategory(await getres);
-    };
-    getcountry();
+    getcategory();
+    getLocation();
+    getTags();
   }, []);
 
   //ending form submit
@@ -452,11 +530,19 @@ const Listing1 = () => {
                                   className={style.select}
                                   required
                                   style={{ marginTop: "5px" }}
+                                  onChange={handlecountry}
                                 >
                                   <option>Select Price Range</option>
-                                  <option>Automotive</option>
-                                  <option>Business</option>
-                                  <option>Cleaning Services</option>
+                                  <option value="skimming">
+                                    Ultra High ($$$$)
+                                  </option>
+                                  <option value="moderate">
+                                    Expensive ($$$)
+                                  </option>
+                                  <option value="economy">Moderate ($$)</option>
+                                  <option value="bellow_economy">
+                                    Cheap ($)
+                                  </option>
                                 </select>
                               )}
                             </div>
@@ -475,7 +561,6 @@ const Listing1 = () => {
                             <option></option>
                             {category.map((getcon) => (
                               <option key={getcon._id} value={getcon._id}>
-                               
                                 {getcon.categoryName}
                               </option>
                             ))}
@@ -483,33 +568,57 @@ const Listing1 = () => {
                         </div>
                         <div className={style.title1}>
                           <div className={style.label}>Location : </div>
-                          <select className={style.select} required>
+                          <select
+                            className={style.select}
+                            required
+                            onChange={handleLocation}
+                          >
                             <option></option>
-                            <option>Automotive</option>
-                            <option>Business</option>
-                            <option>Cleaning Services</option>
+                            {location?.map((getcon) => (
+                              <option key={getcon._id} value={getcon._id}>
+                                {getcon.LocationName}
+                              </option>
+                            ))}
                           </select>
                         </div>
                         <div className={style.title1}>
                           <div className={style.label}>Tag : </div>
                           <select className={style.select} required>
                             <option></option>
-                            <option>Automotive</option>
-                            <option>Business</option>
-                            <option>Cleaning Services</option>
+                            {tags?.map((getcon) => (
+                              <option key={getcon._id} value={getcon._id}>
+                                {getcon.tagname}
+                              </option>
+                            ))}
                           </select>
                         </div>
+
                         <div className={style.features}>
                           <div className={style.feature}>Features ?:</div>
+                          {featurearray.map((ele) => {
+                            return (
+                              <div className={style.feature1}>
+                                <input
+                                  type="checkbox"
+                                  value={ele.name}
+                                  name="features"
+                                  className={style.chkbox}
+                                  checked={check.find((p)=> p.id === ele.id)}
+                                  onChange={(e) => onChangeCredit(e,ele)}
+                                />
+                                <label className={style.lbl}>{ele.name}</label>
+                              </div>
+                            );
+                          })}
+
                           <div className={style.feature1}>
-                            <input type="checkbox" className={style.chkbox} />
-                            <label className={style.lbl}>
-                              Accepts Credit Cards
-                            </label>
-                          </div>
-                          
-                          <div className={style.feature1}>
-                            <input type="checkbox" className={style.chkbox} />
+                            <input
+                              type="checkbox"
+                              className={style.chkbox}
+                              name="isParking"
+                              value="isParking"
+                              onChange={onChangeCredit}
+                            />
                             <label className={style.lbl}> Parkings</label>
                           </div>
                           <div className={style.feature1}>
@@ -527,10 +636,10 @@ const Listing1 = () => {
                         </div>
                       </div>
                     </div>
-                   
-             <div className="form-group col-md-2 mt-4">
-                <button className="btn btn-success mt-2">Submit</button>
-              </div>
+
+                    <div className="form-group col-md-2 mt-4">
+                      <button className="btn btn-success mt-2">Submit</button>
+                    </div>
                     <div className={style.form}>
                       <div className={style.title}>
                         <h4>Contact Info</h4>

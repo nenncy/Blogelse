@@ -69,7 +69,7 @@ router.get('/get/alllocations', async (req, res) => {
       const location=await Location.find();
             
             if(location){
-                return res.status(200).send({data:location})
+                return res.status(200).send(location)
 
             }   
 
