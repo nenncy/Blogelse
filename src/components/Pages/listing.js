@@ -158,6 +158,7 @@ import Headroom from "react-headroom";
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
+import Example from "./example";
 
 function Addnew({ deleteHandeler, id }) {
   return (
@@ -359,7 +360,7 @@ const Listing1 = () => {
   useEffect(() => {
     getcategory();
     getLocation();
-    getTags();
+ 
   }, []);
 
   //ending form submit
@@ -581,6 +582,7 @@ const Listing1 = () => {
                             ))}
                           </select>
                         </div>
+                        <Example/>
                         <div className={style.title1}>
                           <div className={style.label}>Tag : </div>
                           <select className={style.select} required>
@@ -603,7 +605,7 @@ const Listing1 = () => {
                                   value={ele.name}
                                   name="features"
                                   className={style.chkbox}
-                                  checked={check.find((p)=> p.id === ele.id)}
+                                  //checked={check.find((p)=> p.id === ele.id)}
                                   onChange={(e) => onChangeCredit(e,ele)}
                                 />
                                 <label className={style.lbl}>{ele.name}</label>
