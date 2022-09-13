@@ -31,6 +31,9 @@ router.get("/get/allltags", async (req, res) => {
     if (tags) {
       return res.status(200).send(tags);
     }
+    else{
+      return res.status(400).send({ Errormsg: "something went wrong!" });
+    }
   } catch (err) {
     console.log(err);
   }

@@ -72,6 +72,9 @@ router.get('/get/alllocations', async (req, res) => {
                 return res.status(200).send(location)
 
             }   
+            else{
+                return res.status(400).send({ Errormsg: "something went wrong!" });
+            }
 
     }
     catch (err) {

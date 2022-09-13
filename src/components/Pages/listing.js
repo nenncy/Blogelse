@@ -466,10 +466,7 @@ const Listing1 = () => {
                             {" "}
                             Listing Content :
                           </div>  
-                          <RichTextEditorComponent>
-     
-      <Inject services={[HtmlEditor, Toolbar, Image, Link, QuickToolbar]} />
-    </RichTextEditorComponent>
+                  
                           <input
                             type="text"
                             className={style.titleinput}
@@ -663,6 +660,7 @@ const Listing1 = () => {
                           <input
                             type="text"
                             className={style.titleinput}
+                            name="postcode"
                             placeholder="Enter Zip/Post Code"
                             required
                           />
@@ -671,6 +669,7 @@ const Listing1 = () => {
                           <div className={style.label}>Phone 1 : </div>
                           <input
                             type="text"
+                            name="phone1"
                             className={style.titleinput}
                             placeholder="Phone Number 1"
                             required
@@ -680,6 +679,7 @@ const Listing1 = () => {
                           <div className={style.label}>Phone 2 : </div>
                           <input
                             type="text"
+                            name="phone2"
                             className={style.titleinput}
                             placeholder="Phone Number "
                             required
@@ -689,6 +689,7 @@ const Listing1 = () => {
                           <div className={style.label}>Fax : </div>
                           <input
                             type="text"
+                            name="fax"
                             className={style.titleinput}
                             placeholder="Enter Fax"
                             required
@@ -698,6 +699,7 @@ const Listing1 = () => {
                           <div className={style.label}>Email: </div>
                           <input
                             type="text"
+                            name="email"
                             className={style.titleinput}
                             placeholder="Enter Email"
                             required
@@ -707,6 +709,7 @@ const Listing1 = () => {
                           <div className={style.label}>Website : </div>
                           <input
                             type="text"
+                            name="website"
                             className={style.titleinput}
                             placeholder="Listing website eg. http://example.com"
                             required

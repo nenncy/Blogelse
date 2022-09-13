@@ -30,8 +30,13 @@ router.post("/addlisting/plans/:planid", async (req, res) => {
         slogan: req.body.slogan,
         categoryid: req.body.categoryid,
         locationid:req.body.locationid,
-    
-        price:req.body.price
+        price:req.body.price,
+        postcode:req.body.postcode,
+        phone1:req.body.phone1,
+        phone2:req.body.phone2,
+        fax:req.body.fax,
+        email:req.body.email,
+        website:req.body.website,
       });
 
       newListing.tags=newListing.tags.concat(req.body.tags);
@@ -50,5 +55,22 @@ router.post("/addlisting/plans/:planid", async (req, res) => {
     return res.status(500).send("error occured");
   }
 });
+
+
+router.get('/get/all/listings', async (req,res)=>{
+  try{
+    const listing = await Listing.find();
+    if(listing){
+      return res.status(200).send({listing});
+    }else{
+      return res.status(400).send({ Errormsg: "something went wrong!" });
+    }
+
+  }
+  catch (error) {
+    return res.status(500).send("error occured");
+  }
+})
+
 
 module.exports = router;

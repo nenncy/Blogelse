@@ -65,6 +65,9 @@ router.get('/get/category', async (req, res) => {
            if(category) {
                 return res.send(category);
             }
+            else{
+                return res.status(400).send({ Errormsg: "something went wrong!" });
+            }
     }
     catch (err) {
         return res.send(err)

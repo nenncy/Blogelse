@@ -13,6 +13,12 @@ const ListingSchema=new Schema({
     tags:[{type:mongoose.Schema.Types.ObjectId,  ref: 'Tag' }],
     categoryid:{type:mongoose.Schema.Types.ObjectId,  ref: 'Category' },
     locationid:{type:mongoose.Schema.Types.ObjectId,  ref: 'Location' },
+    postcode:{type:String},
+    phone1:{type:Number},
+    phone2:{type:Number},
+    fax:{type:String},
+    email:{type:String},
+    website:{type:String},
     active:{type:Boolean , default:true}
 }, 
   {timestamps:true}
