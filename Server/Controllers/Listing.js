@@ -12,6 +12,7 @@ router.post("/addlisting/plans/:planid", async (req, res) => {
       const listingid = await Listing.findOne({ title: req.body.title , planid: planid._id});
       if (listingid) {
         listingid.features = listingid.features.concat(req.body.features);
+        listingid.tags=listingid.tags.concat(req.body.tags);
         listingid.save((error, data) => {
           if (error) {
             return res.status(400).send(error);
@@ -29,9 +30,14 @@ router.post("/addlisting/plans/:planid", async (req, res) => {
         slogan: req.body.slogan,
         categoryid: req.body.categoryid,
         locationid:req.body.locationid,
+    
         price:req.body.price
       });
+
+      newListing.tags=newListing.tags.concat(req.body.tags);
+      console.log(newListing.tags);
       newListing.features = newListing.features.concat(req.body.features);
+
       newListing.save((error, data) => {
         if (error) {
           return res.status(400).send(error);

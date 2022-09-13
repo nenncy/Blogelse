@@ -159,6 +159,8 @@ import axios from "axios";
 import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
 import Example from "./example";
+import { HtmlEditor, Image, Inject, Link, QuickToolbar, RichTextEditorComponent, Toolbar } from '@syncfusion/ej2-react-richtexteditor';
+
 
 function Addnew({ deleteHandeler, id }) {
   return (
@@ -291,13 +293,15 @@ const Listing1 = () => {
   const [categoryid, setCategoryid] = useState();
   const [locationid, setLocationid] = useState();
   const [location, setLocation] = useState();
-  const [tags, setTags] = useState();
+  const [tags, setTags] = useState([]);
+  
   const [listingdata, setListingdata] = useState({
     title: "",
     content: "",
     slogan: "",
     price: "",
-    features:[]
+    features:[],
+    tags:[]
   });
 
   const handleChange = (event) => {
@@ -327,7 +331,9 @@ const Listing1 = () => {
       categoryid: categoryid,
       locationid: locationid,
       price: listingdata.price,
-      features:check
+      features:check,
+      tags:tags
+  
     };
 
     const res = axios.post(
@@ -350,12 +356,7 @@ const Listing1 = () => {
     console.log(res);
     setLocation(await res);
   };
-  const getTags = async () => {
-    const req = await fetch("http://localhost:8000/get/allltags");
-    const res = await req.json();
-    console.log(res);
-    setTags(await res);
-  };
+
 
   useEffect(() => {
     getcategory();
@@ -379,7 +380,11 @@ const Listing1 = () => {
     const newId = nanoid();
     setIds((ids) => [...ids, newId]);
   };
-
+  const pull_data = (data) => {
+    console.log(data); // LOGS DATA FROM CHILD (My name is Dean Winchester... &)
+    setTags(data);
+  }
+  console.log(tags +"tag");
   const deleteHandeler = (removeId) =>
     setIds((ids) => ids.filter((id) => id !== removeId));
 
@@ -460,7 +465,11 @@ const Listing1 = () => {
                           <div className={style.content}>
                             {" "}
                             Listing Content :
-                          </div>
+                          </div>  
+                          <RichTextEditorComponent>
+     
+      <Inject services={[HtmlEditor, Toolbar, Image, Link, QuickToolbar]} />
+    </RichTextEditorComponent>
                           <input
                             type="text"
                             className={style.titleinput}
@@ -582,18 +591,8 @@ const Listing1 = () => {
                             ))}
                           </select>
                         </div>
-                        <Example/>
-                        <div className={style.title1}>
-                          <div className={style.label}>Tag : </div>
-                          <select className={style.select} required>
-                            <option></option>
-                            {tags?.map((getcon) => (
-                              <option key={getcon._id} value={getcon._id}>
-                                {getcon.tagname}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                        <Example   func={pull_data}/>
+                       
 
                         <div className={style.features}>
                           <div className={style.feature}>Features ?:</div>

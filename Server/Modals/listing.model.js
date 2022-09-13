@@ -10,6 +10,7 @@ const ListingSchema=new Schema({
     content:{type:String},
     slogan:{type:String},
     features:[String],
+    tags:[{type:mongoose.Schema.Types.ObjectId,  ref: 'Tag' }],
     categoryid:{type:mongoose.Schema.Types.ObjectId,  ref: 'Category' },
     locationid:{type:mongoose.Schema.Types.ObjectId,  ref: 'Location' },
     active:{type:Boolean , default:true}
