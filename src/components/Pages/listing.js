@@ -172,14 +172,15 @@ function Addnew({ deleteHandeler, id }) {
         <div>
           <select className={style.select} style={{ padding: "0 20px" }}>
             <option></option>
-            <option>Instagram</option>
-            <option>github</option>
-            <option>LinkediIn</option>
+            <option value="Insta">Instagram</option>
+            <option value="git">github</option>
+            <option value="linkdin">LinkediIn</option>
           </select>
         </div>
         <div className={style.example}>
           <input
             type="url"
+            value=""
             placeholder="eg. http://example.com"
             className={style.url}
           />
@@ -212,6 +213,7 @@ function Addnew1({ deleteHandeler1, id }) {
         <div className={style.faq}>
           <input
             type="text"
+           
             className={style.titleinput1}
             placeholder="Question"
             style={{ width: "100%" }}
@@ -294,12 +296,20 @@ const Listing1 = () => {
   const [locationid, setLocationid] = useState();
   const [location, setLocation] = useState();
   const [tags, setTags] = useState([]);
+  const [pricerange, setPriceRange]=useState("");
   
   const [listingdata, setListingdata] = useState({
     title: "",
     content: "",
     slogan: "",
     price: "",
+    // pricerange:"",
+    postcode:"",
+    phone1:"",
+    phone2:"",
+    fax:"",
+    email:"",
+    website:"",
     features:[],
     tags:[]
   });
@@ -310,8 +320,13 @@ const Listing1 = () => {
   const handlecountry = (event) => {
     event.preventDefault();
     const categoryid = event.target.value;
+  
     setCategoryid(categoryid);
   };
+  const handlePrice =(event)=>{
+    const pricerange=event.target.value;
+    setPriceRange(pricerange);
+  }
 
   const handleLocation = (event) => {
     event.preventDefault();
@@ -319,7 +334,7 @@ const Listing1 = () => {
     setLocationid(locationid);
   };
 
-  console.log(locationid);
+  console.log(pricerange);
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -331,10 +346,18 @@ const Listing1 = () => {
       categoryid: categoryid,
       locationid: locationid,
       price: listingdata.price,
+      pricerange:pricerange,
+      postcode:listingdata.postcode,
+      phone1:listingdata.phone1,
+      phone2:listingdata.phone2,
+      fax:listingdata.fax,
+      email:listingdata.email,
+      website:listingdata.website,
       features:check,
       tags:tags
   
     };
+    console.log(data);
 
     const res = axios.post(
       `http://localhost:8000/addlisting/plans/${planid}`,
@@ -455,7 +478,7 @@ const Listing1 = () => {
                             type="text"
                             className={style.titleinput}
                             placeholder="Enter a title"
-                            required
+                            // required
                             name="title"
                             value={listingdata.title}
                             onChange={handleChange}
@@ -471,7 +494,7 @@ const Listing1 = () => {
                             type="text"
                             className={style.titleinput}
                             placeholder=" "
-                            required
+                            // required
                             name="content"
                             value={listingdata.content}
                             onChange={handleChange}
@@ -483,7 +506,7 @@ const Listing1 = () => {
                             type="text"
                             className={style.titleinput}
                             placeholder="Your Listing's motto"
-                            required
+                            // required
                             name="slogan"
                             value={listingdata.slogan}
                             onChange={handleChange}
@@ -536,8 +559,9 @@ const Listing1 = () => {
                                 <select
                                   className={style.select}
                                   required
+                                  name="pricerange"
                                   style={{ marginTop: "5px" }}
-                                  onChange={handlecountry}
+                                  onChange={handlePrice}
                                 >
                                   <option>Select Price Range</option>
                                   <option value="skimming">
@@ -562,7 +586,7 @@ const Listing1 = () => {
                           </div>
                           <select
                             className={style.select}
-                            required
+                            // required
                             onChange={(e) => handlecountry(e)}
                           >
                             <option></option>
@@ -577,7 +601,7 @@ const Listing1 = () => {
                           <div className={style.label}>Location : </div>
                           <select
                             className={style.select}
-                            required
+                            // required
                             onChange={handleLocation}
                           >
                             <option></option>
@@ -661,8 +685,10 @@ const Listing1 = () => {
                             type="text"
                             className={style.titleinput}
                             name="postcode"
+                            value={listingdata.postcode}
+                            onChange={handleChange}
                             placeholder="Enter Zip/Post Code"
-                            required
+                            // required
                           />
                         </div>
                         <div className={style.title1}>
@@ -670,9 +696,11 @@ const Listing1 = () => {
                           <input
                             type="text"
                             name="phone1"
+                            value={listingdata.phone1}
+                            onChange={handleChange}
                             className={style.titleinput}
                             placeholder="Phone Number 1"
-                            required
+                            // required
                           />
                         </div>
                         <div className={style.title1}>
@@ -680,9 +708,11 @@ const Listing1 = () => {
                           <input
                             type="text"
                             name="phone2"
+                            value={listingdata.phone2}
+                            onChange={handleChange}
                             className={style.titleinput}
                             placeholder="Phone Number "
-                            required
+                            // required
                           />
                         </div>
                         <div className={style.title1}>
@@ -690,9 +720,11 @@ const Listing1 = () => {
                           <input
                             type="text"
                             name="fax"
+                            value={listingdata.fax}
+                            onChange={handleChange}
                             className={style.titleinput}
                             placeholder="Enter Fax"
-                            required
+                            // required
                           />
                         </div>
                         <div className={style.title1}>
@@ -700,9 +732,11 @@ const Listing1 = () => {
                           <input
                             type="text"
                             name="email"
+                            value={listingdata.email}
+                            onChange={handleChange}
                             className={style.titleinput}
                             placeholder="Enter Email"
-                            required
+                            // required
                           />
                         </div>
                         <div className={style.title1}>
@@ -710,9 +744,11 @@ const Listing1 = () => {
                           <input
                             type="text"
                             name="website"
+                            value={listingdata.website}
+                            onChange={handleChange}
                             className={style.titleinput}
                             placeholder="Listing website eg. http://example.com"
-                            required
+                            // required
                           />
                         </div>
                         <div className={style.title1}>
@@ -749,6 +785,7 @@ const Listing1 = () => {
                               <input
                                 type="radio"
                                 className={style.radio}
+                          
                                 name="business"
                                 style={{
                                   appearance: "radio",
@@ -1047,7 +1084,7 @@ const Listing1 = () => {
                           >
                             TimeZone{" "}
                           </label>
-                          <select className={style.select} required>
+                          <select className={style.select} >
                             <option></option>
                             <option>India</option>
                             <option>USA</option>
@@ -1125,7 +1162,7 @@ const Listing1 = () => {
                             type="text"
                             className={style.titleinput}
                             placeholder="Only YouTube & Video URLs"
-                            required
+                            // required
                           />
                         </div>
                       </div>
@@ -1142,7 +1179,7 @@ const Listing1 = () => {
                           type="text"
                           className={style.titleinput1}
                           placeholder="example@email.com"
-                          required
+                          // required
                         />
                       </div>
                     </div>

@@ -24,8 +24,9 @@ router.post("/addlisting/plans/:planid", async (req, res) => {
       }
 
       const newListing = new Listing({
-        title: req.body.title,
+        title: req.body.title, 
         planid: planid._id,
+        pricerange:req.body.pricerange,
         content: req.body.content,
         slogan: req.body.slogan,
         categoryid: req.body.categoryid,
@@ -38,9 +39,20 @@ router.post("/addlisting/plans/:planid", async (req, res) => {
         email:req.body.email,
         website:req.body.website,
       });
-
+      
+      newListing.sociallist=newListing.sociallist.push({
+        name:req.body.name,
+        url:req.body.url
+      })
+      // JSON.parse(sociallist).map((value) => {
+      //   newListing.sociallist.push({
+      //     name:value.name,
+      //     url:value.url
+      //   })
+      // })
+    
       newListing.tags=newListing.tags.concat(req.body.tags);
-      console.log(newListing.tags);
+
       newListing.features = newListing.features.concat(req.body.features);
 
       newListing.save((error, data) => {
